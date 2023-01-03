@@ -1,0 +1,6 @@
+export const colors = {
+  MAIN_COLOR: "#333333",
+  SECONDARY_COLOR: "#151515",
+  BUTTON_COLOR: "#1877F2",
+  LIKED_COLOR: "#AC0000",
+};
