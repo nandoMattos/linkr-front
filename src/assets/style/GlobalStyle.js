@@ -1,4 +1,5 @@
 import { createGlobalStyle } from "styled-components";
+import { colors } from "../constants.js";
 
 const GlobalStyle = createGlobalStyle`
   html, body, div, span, applet, object, iframe,
@@ -28,6 +29,7 @@ const GlobalStyle = createGlobalStyle`
   }
   body {
     line-height: 1;
+    background-color: ${colors.MAIN_COLOR};
   }
   ol, ul {
     list-style: none;
@@ -43,6 +45,14 @@ const GlobalStyle = createGlobalStyle`
   table {
     border-collapse: collapse;
     border-spacing: 0;
+  }
+  * {
+	box-sizing: border-box;
+  }
+  a {
+	text-decoration: none;
+	color: inherit;
+	cursor: pointer;
   }
 `;
 
