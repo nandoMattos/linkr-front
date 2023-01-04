@@ -7,3 +7,9 @@ export function findAllPosts() {
 
   return response;
 }
+
+export function findPostsById(id) {
+  const response = axios.get(`${BASE_URL}/posts/user/${id}`).catch((err) => err.response);
+
+  return response;
+}
