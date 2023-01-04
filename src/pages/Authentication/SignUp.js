@@ -132,6 +132,6 @@ const AuthContainer = styled.div`
       padding-bottom: 5px;
     }
   }
-`
+`;
 
 export { AuthContainer };
