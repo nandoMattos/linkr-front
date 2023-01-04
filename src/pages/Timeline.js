@@ -19,10 +19,11 @@ export default function Timeline() {
     try {
       const res = await findAllPosts();
       setListPosts(res.data);
-      setLoading(false)
+      setLoading(false);
     }catch(err) {
       console.log(err);
       setError(true);
+      setLoading(false)
     }
 
   }
@@ -30,7 +31,7 @@ export default function Timeline() {
   return (
     <Main title="timeline">
       {loading && <TextInfo>Loading ...</TextInfo>}
-      {(loading === false && listPosts.length === 0) && <TextInfo>There are no posts yet ...</TextInfo>}
+      {(loading === false && listPosts.length === 0 && error === false) && <TextInfo>There are no posts yet ...</TextInfo>}
       {error && <TextInfo>An error occured while trying to fetch the posts, please refresh the page ...</TextInfo>}
       
       {
