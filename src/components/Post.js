@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export default function Post({post}) {
-  const {username, profilePicture, url, description, 
+  const {id, username, profilePicture, url, description, 
     hashtags, likedBy, title, image, linkDescription} = post
 
   return (
@@ -15,7 +15,7 @@ export default function Post({post}) {
 
       <Content>
         <BoxHeader>
-          <h1>{username}</h1>
+          <Link to={`/user/${id}`}>{username}</Link>
 
           <BoxSettings>
             <ion-icon name="pencil-outline"></ion-icon>
@@ -106,6 +106,7 @@ const BoxSettings = styled.div`
   gap: 10px;
   font-size: 15px;
 `;
+
 
 const BoxInfo = styled.a`
   height: 100%;
