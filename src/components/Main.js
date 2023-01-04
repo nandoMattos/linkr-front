@@ -1,15 +1,22 @@
 import styled from "styled-components";
 import Header from "./Header";
 
-export default function Main({ title, children }) {
+export default function Main({ title, children, loading }) {
+
   return (
     <Container>
       <Header></Header>
 
       <Content>
-        <Title>{title}</Title>
-        {children}
+        {loading ? <TextInfo>Loading ...</TextInfo> : (
+          <>
+            <Title>{title}</Title>
+            {children}
+          </>
+        )}
       </Content>
+
+
     </Container>
   );
 }
@@ -35,4 +42,13 @@ const Title = styled.h1`
   color: #ffffff;
 
   margin-bottom: 10px;
+`;
+
+
+const TextInfo = styled.h1`
+  font-family: Oswald;
+  font-size: 25px;
+  font-weight: 700;
+  text-align: center;
+  color: #ffffff;
 `;
