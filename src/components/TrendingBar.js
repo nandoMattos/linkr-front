@@ -1,31 +1,39 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import env from "react-dotenv";
+import { useNavigate } from "react-router";
 import styled from "styled-components";
 import { colors } from "../assets/constants";
 
 export default function TrendingBar() {
   const [trendings, setTrendings] = useState([]);
-
+  const navigate = useNavigate();
+  
+  useEffect(() => {
+    getTrendings();
+  }, []);
+  
+  
   async function getTrendings() {
     try {
-      const res = await axios.get(`${env.API_URL}/hashtags/trendings`);
+      const res = await axios.get(
+        `${process.env.REACT_APP_API}/hashtags/trendings`
+      );
       setTrendings(res.data);
     } catch (err) {
       console.log(err);
     }
   }
 
-  useEffect(() => {
-    getTrendings();
-  }, []);
+  function getTrendPage(trendName) {
+    navigate(`/hashtags/${trendName}`);
+  }
 
   return (
     <Container>
       <Title>trending</Title>
       <Content>
         {trendings.map((t) => (
-          <Trend>#{t}</Trend>
+          <Trend onClick={()=> getTrendPage(t.name)} key={t.id}>#{t.name}</Trend>
         ))}
       </Content>
     </Container>
@@ -49,7 +57,6 @@ const Container = styled.aside`
 `;
 
 const Title = styled.h1`
-  /* background-color: red; */
   font-family: "Oswald";
   color: white;
   font-size: 27px;
