@@ -13,6 +13,7 @@ function App() {
           <Route path="/" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/timeline" element={<Timeline />} />
+          <Route path="/user/:id" element={<Timeline isUserPage={true} />} />
         </Routes>
       </BrowserRouter>
     </>
