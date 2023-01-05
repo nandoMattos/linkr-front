@@ -1,20 +1,24 @@
 import styled from "styled-components";
 import Header from "./Header";
+import TrendingBar from "./TrendingBar";
 
 export default function Main({ title, children }) {
   return (
     <Container>
       <Header></Header>
-
       <Content>
         <Title>{title}</Title>
         {children}
       </Content>
+
+      <TrendingBar />
     </Container>
   );
 }
 
-const Container = styled.div``;
+const Container = styled.div`
+  display: flex;
+`;
 
 const Content = styled.div`
   display: flex;

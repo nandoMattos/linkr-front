@@ -7,3 +7,15 @@ export function findAllPosts() {
 
   return response;
 }
+
+export function insertLike(id) {
+  const response = axios.post(`${BASE_URL}/posts/${id}/like`).catch((err) => console.log(err))
+
+  return response
+}
+
+export function deleteLike(id) {
+  const response = axios.delete(`${BASE_URL}/posts/${id}/deslike`).catch((err) => console.log(err))
+
+  return response
+}

@@ -5,13 +5,12 @@ import Post from "../components/Post";
 import { findAllPosts } from "../services/posts";
 
 export default function Timeline() {
-
   const [listPosts, setListPosts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    setLoading(true);
+    setLoading(true); 
     getPosts();
   }, []);
 
