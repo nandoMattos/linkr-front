@@ -10,7 +10,7 @@ export default function Timeline() {
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    setLoading(true);
+    setLoading(true); 
     getPosts();
   }, []);
 

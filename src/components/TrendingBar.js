@@ -1,6 +1,5 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import env from "react-dotenv";
 import styled from "styled-components";
 import { colors } from "../assets/constants";
 
@@ -9,7 +8,9 @@ export default function TrendingBar() {
 
   async function getTrendings() {
     try {
-      const res = await axios.get(`${env.API_URL}/hashtags/trendings`);
+      const res = await axios.get(
+        `${process.env.REACT_APP_API}/hashtags/trendings`
+      );
       setTrendings(res.data);
     } catch (err) {
       console.log(err);
@@ -25,7 +26,7 @@ export default function TrendingBar() {
       <Title>trending</Title>
       <Content>
         {trendings.map((t) => (
-          <Trend>#{t}</Trend>
+          <Trend key={t.id}>#{t.name}</Trend>
         ))}
       </Content>
     </Container>
@@ -49,7 +50,6 @@ const Container = styled.aside`
 `;
 
 const Title = styled.h1`
-  /* background-color: red; */
   font-family: "Oswald";
   color: white;
   font-size: 27px;
