@@ -1,17 +1,21 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-export default function Post({ likedPosts, setLikedPosts }) {
+export default function Post({post}) {
+  const {id, username, profilePicture, url, description, 
+    hashtags, likedBy, title, image, linkDescription} = post
+
   return (
     <Container>
       <Header>
-        <img src="http://encurtador.com.br/gLMP9" alt="user_img"></img>
+        <img src={profilePicture} alt="user_img"></img>
         <ion-icon name="heart-outline"></ion-icon>
-        <p>13 likes</p>
+        <p>{likedBy.length} likes</p>
       </Header>
 
       <Content>
         <BoxHeader>
-          <h1>Juvenal Juvêncio</h1>
+          <Link to={`/user/${id}`}>{username}</Link>
 
           <BoxSettings>
             <ion-icon name="pencil-outline"></ion-icon>
@@ -20,25 +24,17 @@ export default function Post({ likedPosts, setLikedPosts }) {
         </BoxHeader>
 
         <p>
-          Muito maneiro esse tutorial de Material UI com React, deem uma olhada!{" "}
-          <span>#react #material</span>
+          {description} <span>{hashtags.map((h) => h !== null ? `#${h} ` : '')}</span>
         </p>
 
-        <BoxInfo>
+        <BoxInfo href={url} target="_blank">
           <Info>
-            <h1>Como aplicar o Material UI em um projeto React</h1>
-            <h2>
-              Hey! I have moved this tutorial to my personal blog. Same content,
-              new location. Sorry about making you click through to another
-              page.
-            </h2>
-            <p>https://medium.com/@pshrmn/a-simple-react-router</p>
+            <h1>{title}</h1>
+            <h2>{linkDescription}</h2>
+            <p>{url}</p>
           </Info>
 
-          <img
-            src="https://blog.logrocket.com/wp-content/uploads/2021/06/react-icons-comprehensive-tutorial-examples.png"
-            alt="img_link"
-          />
+          <img src={image} alt="img_link" />
         </BoxInfo>
       </Content>
     </Container>
@@ -111,7 +107,8 @@ const BoxSettings = styled.div`
   font-size: 15px;
 `;
 
-const BoxInfo = styled.div`
+
+const BoxInfo = styled.a`
   height: 100%;
   border: 1px solid #4d4d4d;
   border-radius: 12px;
