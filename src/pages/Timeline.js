@@ -3,9 +3,11 @@ import { useParams } from "react-router";
 import styled from "styled-components";
 import Main from "../components/Main";
 import Post from "../components/Post";
+
 import { findPostsById, findAllPosts } from "../services/posts";
 
 export default function Timeline({isUserPage}) {
+
   const [listPosts, setListPosts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
@@ -14,7 +16,7 @@ export default function Timeline({isUserPage}) {
   const [username, setUsername] = useState();
 
   useEffect(() => {
-    setLoading(true);
+    setLoading(true); 
     getPosts();
   }, []);
 

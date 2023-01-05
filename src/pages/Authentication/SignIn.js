@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { AuthContainer } from "./SignUp";
 
-export default function LogIn() {
+export default function SignIn() {
   return (
     <AuthContainer>
       <div className="left">

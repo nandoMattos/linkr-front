@@ -1,12 +1,12 @@
 import styled from "styled-components";
 import Header from "./Header";
+import TrendingBar from "./TrendingBar";
 
 export default function Main({ title, children, loading }) {
 
   return (
     <Container>
       <Header></Header>
-
       <Content>
         {loading ? <TextInfo>Loading ...</TextInfo> : (
           <>
@@ -17,11 +17,15 @@ export default function Main({ title, children, loading }) {
       </Content>
 
 
+      <TrendingBar />
+
     </Container>
   );
 }
 
-const Container = styled.div``;
+const Container = styled.div`
+  display: flex;
+`;
 
 const Content = styled.div`
   display: flex;

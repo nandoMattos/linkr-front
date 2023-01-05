@@ -1,21 +1,47 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { deleteLike, insertLike } from "../services/posts";
 
 export default function Post({post}) {
-  const {id, username, profilePicture, url, description, 
-    hashtags, likedBy, title, image, linkDescription} = post
+  const {id, username, profilepicture, url, description, 
+    title, image, linkDescription} = post
+
+  const [likedBy, setLikedBy] = useState(post.likedBy);
+  if(likedBy[0] === null) setLikedBy([])
+  
+  const [userLiked, setUserLiked] = useState(likedBy.includes("naruto"))
+  
+  function deslikePost(id) {
+    setUserLiked(false);
+    likedBy.shift();
+    setLikedBy(likedBy)
+    deleteLike(id)
+  }
+
+  function likePost(id) {
+    setUserLiked(true);
+    likedBy.unshift("naruto")
+    setLikedBy(likedBy)
+    insertLike(id)
+  }
+
 
   return (
     <Container>
       <Header>
-        <img src={profilePicture} alt="user_img"></img>
-        <ion-icon name="heart-outline"></ion-icon>
+        <img src={profilepicture} alt="user_img"></img>
+        <HeartColor color={userLiked ? "red" : "none"}>
+          <ion-icon 
+            onClick={()=> userLiked ? deslikePost(id) : likePost(id) } 
+            name={userLiked ? "heart" : "heart-outline"}/>
+        </HeartColor>
         <p>{likedBy.length} likes</p>
       </Header>
 
       <Content>
         <BoxHeader>
-          <Link to={`/user/${id}`}>{username}</Link>
+          <Link to={`/user/${id}`}>{username} {id}</Link>
 
           <BoxSettings>
             <ion-icon name="pencil-outline"></ion-icon>
@@ -24,7 +50,12 @@ export default function Post({post}) {
         </BoxHeader>
 
         <p>
-          {description} <span>{hashtags.map((h) => h !== null ? `#${h} ` : '')}</span>
+          {description.split(" ")
+            .map(el => 
+              !el.includes("#") ? 
+              el : 
+              el
+            ).join(" ")}
         </p>
 
         <BoxInfo href={url} target="_blank">
@@ -78,6 +109,10 @@ const Header = styled.div`
     font-size: 11px;
   }
 `;
+
+const HeartColor = styled.span`
+  color: ${ ({color})=> color }
+`
 
 const Content = styled.div`
   display: flex;
