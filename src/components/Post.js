@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export default function Post() {
+export default function Post({ likedPosts, setLikedPosts }) {
   return (
     <Container>
       <Header>
@@ -20,17 +20,25 @@ export default function Post() {
         </BoxHeader>
 
         <p>
-          Muito maneiro esse tutorial de Material UI com React, deem uma olhada! <span>#react #material</span>
+          Muito maneiro esse tutorial de Material UI com React, deem uma olhada!{" "}
+          <span>#react #material</span>
         </p>
 
         <BoxInfo>
           <Info>
             <h1>Como aplicar o Material UI em um projeto React</h1>
-            <h2>Hey! I have moved this tutorial to my personal blog. Same content, new location. Sorry about making you click through to another page.</h2>
+            <h2>
+              Hey! I have moved this tutorial to my personal blog. Same content,
+              new location. Sorry about making you click through to another
+              page.
+            </h2>
             <p>https://medium.com/@pshrmn/a-simple-react-router</p>
           </Info>
 
-          <img src="https://blog.logrocket.com/wp-content/uploads/2021/06/react-icons-comprehensive-tutorial-examples.png" alt="img_link" />
+          <img
+            src="https://blog.logrocket.com/wp-content/uploads/2021/06/react-icons-comprehensive-tutorial-examples.png"
+            alt="img_link"
+          />
         </BoxInfo>
       </Content>
     </Container>
