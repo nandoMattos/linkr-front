@@ -12,6 +12,7 @@ export function findPostsById(id) {
   const response = axios.get(`${BASE_URL}/posts/user/${id}`).catch((err) => err.response);
 
   return response;
+}
 
 export function insertLike(id) {
   const response = axios.post(`${BASE_URL}/posts/${id}/like`).catch((err) => console.log(err))
