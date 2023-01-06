@@ -106,7 +106,7 @@ export default function SignUp() {
 
           <button disabled={loading}>
             {loading ?
-              (<ThreeDots color="#ffffff" height={40} width={40} />) :
+              (<ThreeDots color="#ffffff" height={50} width={50} />) :
               ("Sign Up")}
           </button>
         </form>
