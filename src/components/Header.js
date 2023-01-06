@@ -10,6 +10,8 @@ export default function Header() {
   const [activeInput, setActiveInput] = useState(false);
   const [listUser, setListUser] = useState([]);
 
+  const profileImg = JSON.parse(localStorage.getItem("profileImg"));
+
   function setActive() {
     setActiveInput(!activeInput);
   }
@@ -54,7 +56,7 @@ export default function Header() {
 
       <div className="right">
         <ion-icon name="chevron-down-outline"></ion-icon>
-        <img src="http://encurtador.com.br/gLMP9" alt="user_img"></img>
+        <img src={profileImg} alt="user_img"></img>
       </div>
   </Container>
   );
@@ -96,6 +98,7 @@ const Container = styled.div`
       height: 53px;
       width: 53px;
       border-radius: 30px;
+      object-fit: cover;
     }
   }
 `;
