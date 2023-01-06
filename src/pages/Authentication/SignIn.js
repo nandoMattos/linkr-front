@@ -23,6 +23,9 @@ export default function SignIn() {
     postSignIn(body)
       .then((res) => {
         resetForm();
+        localStorage.setItem("profileImg", JSON.stringify(res.data.picture_url));
+        localStorage.setItem("token", JSON.stringify(res.data.token));
+        localStorage.setItem("userId", JSON.stringify(res.data.id_user));
         navigate("/timeline");
         setLoading(false);
       })

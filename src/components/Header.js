@@ -1,14 +1,27 @@
 import { useState } from "react";
 import { DebounceInput } from "react-debounce-input";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useContext } from "react";
 import styled from "styled-components";
 import { colors } from "../assets/constants";
 import { findUsersByName } from "../services/user";
 import UserSearch from "./UserSearch";
+import UserContext from "../context/UserContext";
 
 export default function Header() {
+  const { showLogout, setShowLogout } = useContext(UserContext);
   const [activeInput, setActiveInput] = useState(false);
   const [listUser, setListUser] = useState([]);
+
+  const profileImg = JSON.parse(localStorage.getItem("profileImg"));
+
+  const navigate = useNavigate();
+
+  function logout() {
+    setShowLogout(false)
+    localStorage.clear();
+    navigate("/");
+  }
 
   function setActive() {
     setActiveInput(!activeInput);
@@ -24,43 +37,51 @@ export default function Header() {
     }
   }
 
-
   return (
-  <Container>
-      <Link to="/timeline">
-        <h1>linkr</h1>
-      </Link>
+    <>
+      <HeaderContainer>
+        <Link to="/timeline">
+          <h1>linkr</h1>
+        </Link>
 
-    <div>
-      <SearchBar onFocus={() => setActive()} onBlur={() => setActive()}>
-        <DebounceInput
-          type="text" 
-          placeholder="Search for people" 
-          minLength={3}
-          debounceTimeout={300}
-          onChange={e => handleInput(e)}
-        />
-        <ion-icon name="search-outline"></ion-icon>
-      </SearchBar>
+        <div>
+          <SearchBar onFocus={() => setActive()} onBlur={() => setActive()}>
+            <DebounceInput
+              type="text"
+              placeholder="Search for people"
+              minLength={3}
+              debounceTimeout={300}
+              onChange={e => handleInput(e)}
+            />
+            <ion-icon name="search-outline"></ion-icon>
+          </SearchBar>
 
-      {activeInput && listUser.length > 0 &&
-      (
-        <Dropdown>
-          {listUser.map((u, idx) => <UserSearch key={idx} user={u}/>)}
-        </Dropdown>
-      )}
+          {activeInput && listUser.length > 0 &&
+            (
+              <Dropdown>
+                {listUser.map((u, idx) => <UserSearch key={idx} user={u} />)}
+              </Dropdown>
+            )}
 
-    </div>
+        </div>
 
-      <div className="right">
-        <ion-icon name="chevron-down-outline"></ion-icon>
-        <img src="http://encurtador.com.br/gLMP9" alt="user_img"></img>
-      </div>
-  </Container>
+        <div className="right" onClick={() => setShowLogout(!showLogout)}>
+          {showLogout ?
+            (<ion-icon name="chevron-up-outline"></ion-icon>) :
+            (<ion-icon name="chevron-down-outline"></ion-icon>)}
+
+          <img src={profileImg} alt="user_img"></img>
+        </div>
+      </HeaderContainer>
+
+      <LogoutContainer showLogout={showLogout} onClick={logout}>
+        <h2>Logout</h2>
+      </LogoutContainer>
+    </>
   );
 }
 
-const Container = styled.div`
+const HeaderContainer = styled.div`
   height: 72px;
   width: 100%;
   position: fixed;
@@ -96,8 +117,31 @@ const Container = styled.div`
       height: 53px;
       width: 53px;
       border-radius: 30px;
+      object-fit: cover;
     }
   }
+`;
+
+const LogoutContainer = styled.div`
+  width: 160px;
+  height: 52px;
+  border-radius: 0px 0px 0px 20px;
+  background-color: #171717;
+  font-family: 'Lato', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 72px;
+  right: 0px;
+  z-index: 998;
+  transform: ${(props) => (props.showLogout ? "translateY(0)" : "translateY(-100px)")};    
+  transition: all 0.5s ease-out;
+  cursor: pointer;
+  position: fixed;
 `;
 
 const SearchBar = styled.div`
