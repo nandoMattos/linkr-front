@@ -199,6 +199,10 @@ const AuthContainer = styled.div`
       display: flex;
       justify-content: center;
       align-items: center;
+      &:disabled {
+      opacity: 0.5;
+      cursor: default;
+      }
     }
 
     h3 {
