@@ -24,4 +24,4 @@ function postSignIn(body) {
   return promise;
 }
 
-export { postSignUp, postSignIn };
+export { postSignUp, postSignIn, createHeaders };
