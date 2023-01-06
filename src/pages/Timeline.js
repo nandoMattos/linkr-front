@@ -20,7 +20,7 @@ export default function Timeline({isUserPage}) {
     setLoading(true); 
     getPosts();
     //eslint-disable-next-line
-  }, []);
+  }, [isUserPage]);
 
   async function getPosts() {
 
