@@ -17,7 +17,7 @@ export default function Main({ title, children, loading }) {
       </Content>
 
 
-      <TrendingBar />
+      <TrendingBar loading={loading}/>
 
     </Container>
   );

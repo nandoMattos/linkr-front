@@ -1,32 +1,39 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
+
 import styled from "styled-components";
 import { colors } from "../assets/constants";
+import { getTrendingTopics } from "../services/hashtagService";
 
-export default function TrendingBar() {
+export default function TrendingBar({loading}) {
   const [trendings, setTrendings] = useState([]);
-
+  const navigate = useNavigate();
+  
+  useEffect(() => {
+    getTrendings();
+  }, []);
+  
+  
   async function getTrendings() {
     try {
-      const res = await axios.get(
-        `${process.env.REACT_APP_API}/hashtags/trendings`
-      );
+      const res = await getTrendingTopics();
       setTrendings(res.data);
     } catch (err) {
       console.log(err);
     }
   }
 
-  useEffect(() => {
-    getTrendings();
-  }, []);
+  function getTrendPage(trendName) {
+    navigate(`/hashtags/${trendName}`);
+  }
 
   return (
-    <Container>
+    <Container display={loading ? "none" : "flex"}>
       <Title>trending</Title>
       <Content>
         {trendings.map((t) => (
-          <Trend key={t.id}>#{t.name}</Trend>
+          <Trend onClick={()=> getTrendPage(t.name)} key={t.id}>#{t.name}</Trend>
         ))}
       </Content>
     </Container>
@@ -34,7 +41,7 @@ export default function TrendingBar() {
 }
 
 const Container = styled.aside`
-  display: flex;
+  display: ${({display})=>display};
   flex-direction: column;
   height: 400px;
   width: 40vh;

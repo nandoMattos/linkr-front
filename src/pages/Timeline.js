@@ -19,6 +19,7 @@ export default function Timeline({isUserPage}) {
   useEffect(() => {
     setLoading(true); 
     getPosts();
+    //eslint-disable-next-line
   }, []);
 
   async function getPosts() {
