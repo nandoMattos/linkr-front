@@ -80,6 +80,12 @@ const Container = styled.div`
 
   color: #ffffff;
   font-family: Lato;
+
+  @media (max-width: 425px) {
+    border-radius: 0px;
+
+    text-align: center;
+  }
 `;
 
 const Photo = styled.div`

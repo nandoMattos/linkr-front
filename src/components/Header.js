@@ -56,12 +56,13 @@ export default function Header() {
             <ion-icon name="search-outline"></ion-icon>
           </SearchBar>
 
-          {activeInput && listUser.length > 0 &&
+          { activeInput && listUser.length > 0 &&
             (
               <Dropdown>
                 {listUser.map((u, idx) => <UserSearch key={idx} user={u} />)}
               </Dropdown>
-            )}
+            )
+          }
 
         </div>
 
@@ -173,6 +174,10 @@ const SearchBar = styled.div`
   ion-icon {
     font-size: 22px;
     color: #C6C6C6;
+  }
+
+  @media (max-width: 425px) {
+    display: none;
   }
 `;
 
