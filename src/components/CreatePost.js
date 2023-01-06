@@ -1,7 +1,27 @@
+import { useState } from "react";
 import styled from "styled-components"
 
 
-export function CreatePost(myPhoto) {
+export function CreatePost() {
+
+    const [form, setForm] = useState({url: "", description: ""})
+    const [disabled, setDisabled] = useState(false);
+
+    function handleForm(e) {
+        const {name, value} = e.target;
+        setForm({...form, [name]: value})
+    
+    }
+    
+    function sendPost(e) {
+        e.preventDefault();
+
+        const body = {
+            ...form
+        }
+        console.log(body)
+        setDisabled(true)
+    }
 
     return (
         <Container>
@@ -11,13 +31,13 @@ export function CreatePost(myPhoto) {
                 <Content>
                     <p>What are you going to share today?</p>
                     <FormPost>
-                        <form>
+                        <form onSubmit={sendPost}>
                             <InputUrl>
                                 <input
                                     name="url"
                                     type="url"
-                                    // value={a}
-                                    // onChange={a}
+                                    value={form.url}
+                                    onChange={handleForm}
                                     placeholder="http://..."
                                     required
                                 >
@@ -27,14 +47,14 @@ export function CreatePost(myPhoto) {
                                 <input
                                     name="description"
                                     type="text"
-                                    // value={a}
-                                    // onChange={a}
+                                    value={form.description}
+                                    onChange={handleForm}
                                     placeholder="Awesome article about #javascript"
                                 >
                                 </input>
                             </InputDescription>
                             <PostButton>
-                                <button type="submit">Publish</button>
+                                <button type="submit">{ disabled ? <span>Publishing...</span> : <span>Publish</span>}</button>
                             </PostButton>
                         </form>
                     </FormPost>
