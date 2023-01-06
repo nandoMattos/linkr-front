@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import styled from "styled-components";
+import { CreatePost } from "../components/CreatePost";
 import Main from "../components/Main";
 import Post from "../components/Post";
 
@@ -41,6 +42,7 @@ export default function Timeline({isUserPage}) {
 
   return (
     <Main title={isUserPage ? `${username}'s posts` : 'timeline'} loading={loading}>
+      <CreatePost></CreatePost>
       {(loading === false && listPosts.length === 0 && error === false) && <TextInfo>There are no posts yet ...</TextInfo>}
       {error && <TextInfo>An error occured while trying to fetch the posts, please refresh the page ...</TextInfo>}
       
