@@ -32,3 +32,9 @@ export function deleteLike(id) {
 
   return response;
 }
+
+export function addPost() {
+  const response = axios.post(`${BASE_URL}/posts`).catch(prompt("Houve um erro ao publicar seu link"))
+
+  return response;
+}
