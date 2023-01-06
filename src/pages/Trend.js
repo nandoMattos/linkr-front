@@ -16,7 +16,7 @@ export default function Trend() {
     setLoading(true)
     getPosts();
     //eslint-disable-next-line
-  },[])
+  },[name])
 
   async function getPosts() {
     try{
