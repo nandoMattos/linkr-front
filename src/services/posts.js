@@ -2,6 +2,13 @@ import axios from "axios";
 
 const BASE_URL = process.env.REACT_APP_API;
 
+// just change token afterwards
+const config = {
+  headers:{
+    Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjo0LCJpYXQiOjE2NzI5NjU3MjF9.AaK2RkY1YPlyujs6WgrGAxYY3GymmePIqkCh3zY7a9w"
+  } 
+}
+
 export function findAllPosts() {
   const response = axios.get(`${BASE_URL}/posts`).catch((err) => err.response);
 
