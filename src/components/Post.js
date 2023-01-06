@@ -79,6 +79,7 @@ const Container = styled.div`
 
   background-color: #171717;
   height: 270px;
+  
 
   border-radius: 16px;
 
@@ -86,6 +87,10 @@ const Container = styled.div`
 
   color: #ffffff;
   font-family: Lato;
+
+  @media (max-width: 425px) {
+    border-radius: 0px;
+  }
 `;
 
 const Header = styled.div`
@@ -111,8 +116,8 @@ const Header = styled.div`
 `;
 
 const HeartColor = styled.span`
-  color: ${ ({color})=> color }
-`
+  color: ${ ({color})=> color };
+`;
 
 const Content = styled.div`
   display: flex;
@@ -154,6 +159,10 @@ const BoxInfo = styled.a`
     width: 200px;
     border-radius: 0px 12px 12px 0px;
   }
+
+  @media (max-width: 425px) {
+    max-height: 185px;
+  }
 `;
 
 const Info = styled.div`
@@ -179,5 +188,12 @@ const Info = styled.div`
 
   p {
     color: #cecece;
+  }
+
+  @media (max-width: 425px) {
+    h1 {
+      font-size: 10px;
+    }
+    
   }
 `;

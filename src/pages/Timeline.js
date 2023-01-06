@@ -43,10 +43,9 @@ export default function Timeline({isUserPage}) {
 
   return (
     <Main title={isUserPage ? `${username}'s posts` : 'timeline'} loading={loading}>
-      <CreatePost></CreatePost>
       {(loading === false && listPosts.length === 0 && error === false) && <TextInfo>There are no posts yet ...</TextInfo>}
       {error && <TextInfo>An error occured while trying to fetch the posts, please refresh the page ...</TextInfo>}
-      
+      {!isUserPage && <CreatePost />}
       {
         listPosts.map((post) => <Post post={post} />)
       }

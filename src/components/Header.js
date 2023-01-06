@@ -174,6 +174,10 @@ const SearchBar = styled.div`
     font-size: 22px;
     color: #C6C6C6;
   }
+
+  @media (max-width: 425px) {
+    display: none;
+  }
 `;
 
 const Dropdown = styled.div`
