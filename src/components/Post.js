@@ -41,8 +41,7 @@ export default function Post({post}) {
 
       <Content>
         <BoxHeader>
-          <Link to={`/user/${id}`}>{username} {id}</Link>
-
+          <Link to={`/user/${id}`}>{username}</Link>
           <BoxSettings>
             <ion-icon name="pencil-outline"></ion-icon>
             <ion-icon name="trash"></ion-icon>
@@ -100,7 +99,8 @@ const Header = styled.div`
   gap: 5px;
 
   img {
-    width: 50px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
 
     margin-bottom: 10px;
