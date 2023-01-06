@@ -1,5 +1,6 @@
 import { useState } from "react";
 import styled from "styled-components"
+import { addPost } from "../services/posts";
 
 
 export function CreatePost() {
@@ -21,6 +22,9 @@ export function CreatePost() {
         }
         console.log(body)
         setDisabled(true)
+        addPost(body);
+        setDisabled(false);
+        setForm({url: "", description: ""})
     }
 
     return (
