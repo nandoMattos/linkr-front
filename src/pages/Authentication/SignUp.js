@@ -1,8 +1,64 @@
+import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { ThreeDots } from 'react-loader-spinner';
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { postSignUp } from "../../services/authService.js";
 import { colors } from "../../assets/constants.js";
 
 export default function SignUp() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("");
+  const [pictureUrl, setPictureUrl] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const navigate = useNavigate();
+
+  function sendForm(e) {
+    e.preventDefault();
+    setLoading(true);
+
+    const body = {
+      username,
+      email,
+      password,
+      picture_url: pictureUrl
+    }
+
+    if (password.length < 6) {
+      setPassword("");
+      alert("Password must be 6 digits or more. Try again.");
+      setLoading(false);
+      return;
+    }
+
+    postSignUp(body)
+      .then(() => {
+        resetForm();
+        navigate("/");
+        setLoading(false);
+      })
+      .catch((res) => {
+        if (res.response.status === 409) {
+          setEmail("");
+          alert("This email already exists, try another one.");
+          setLoading(false);
+          return;
+        }
+
+        resetForm();
+        alert("Something went wrong. Try again.");
+        setLoading(false);
+      })
+  }
+
+  function resetForm() {
+    setEmail("");
+    setPassword("");
+    setUsername("");
+    setPictureUrl("");
+  }
+
   return (
     <AuthContainer>
       <div className="left">
@@ -11,28 +67,48 @@ export default function SignUp() {
       </div>
 
       <div className="right">
-        <form>
+        <form onSubmit={sendForm}>
           <input
             placeholder="e-mail"
             type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            disabled={loading}
           />
 
           <input
             placeholder="password"
             type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+            disabled={loading}
           />
 
           <input
             placeholder="username"
             type="text"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            required
+            disabled={loading}
           />
 
           <input
             placeholder="picture url"
             type="url"
+            value={pictureUrl}
+            onChange={(e) => setPictureUrl(e.target.value)}
+            required
+            disabled={loading}
           />
 
-          <button>Sign Up</button>
+          <button disabled={loading}>
+            {loading ?
+              (<ThreeDots color="#ffffff" height={50} width={50} />) :
+              ("Sign Up")}
+          </button>
         </form>
 
         <Link to="/">
@@ -120,6 +196,9 @@ const AuthContainer = styled.div`
       font-weight: 700;
       color: white;
       cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
     h3 {
