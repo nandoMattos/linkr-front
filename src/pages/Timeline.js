@@ -19,11 +19,11 @@ export default function Timeline({isUserPage}) {
   useEffect(() => {
     setLoading(true); 
     getPosts();
-    //eslint-disable-next-line
+    // eslint-disable-next-line
   }, []);
 
   async function getPosts() {
-
+    console.log('peguei')
     try {
 			let res;
 			if(isUserPage === true) {

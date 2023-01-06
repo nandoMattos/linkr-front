@@ -2,46 +2,60 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { deleteLike, insertLike } from "../services/posts";
+import { Tooltip } from 'react-tooltip'
+import 'react-tooltip/dist/react-tooltip.css'
 
 export default function Post({post}) {
-  const {id, username, profilepicture, url, description, 
+  const {id, postId, username, profilepicture, url, description, 
     title, image, linkDescription} = post
+  const [likedBy, setLikedBy] = useState(post.likedBy);  
+  const usernameLogged = getLikesInfo()
 
-  const [likedBy, setLikedBy] = useState(post.likedBy);
-  if(likedBy[0] === null) setLikedBy([])
+  const [userLiked, setUserLiked] = useState(likedBy.includes(usernameLogged))
   
-  const [userLiked, setUserLiked] = useState(likedBy.includes("naruto"))
-  
+
+  function getLikesInfo() {
+    if(likedBy[0] === null) setLikedBy([])
+    return JSON.parse(localStorage.getItem("username"))
+  }
+
   function deslikePost(id) {
     setUserLiked(false);
-    likedBy.shift();
-    setLikedBy(likedBy)
+    for (let i in likedBy) {
+      if (likedBy[i] === usernameLogged) {
+        likedBy.splice(i,i+1)
+        console.log(likedBy)
+        setLikedBy(likedBy);
+      }
+    }
     deleteLike(id)
   }
 
   function likePost(id) {
     setUserLiked(true);
-    likedBy.unshift("naruto")
+    likedBy.unshift(usernameLogged)
     setLikedBy(likedBy)
+    console.log(likedBy)
     insertLike(id)
   }
 
-
   return (
     <Container>
+
       <Header>
         <img src={profilepicture} alt="user_img"></img>
-        <HeartColor color={userLiked ? "red" : "none"}>
-          <ion-icon 
-            onClick={()=> userLiked ? deslikePost(id) : likePost(id) } 
+        <HeartColor id="likedBy" color={userLiked ? "red" : "none"}>
+          <ion-icon
+            onClick={()=> userLiked ? deslikePost(postId) : likePost(postId) } 
             name={userLiked ? "heart" : "heart-outline"}/>
         </HeartColor>
+        <Tooltip anchorId="likedBy" content={postId} />
         <p>{likedBy.length} likes</p>
       </Header>
 
       <Content>
         <BoxHeader>
-          <Link to={`/user/${id}`}>{username} {id}</Link>
+          <Link to={`/user/${id}`}>{username} {postId}</Link>
 
           <BoxSettings>
             <ion-icon name="pencil-outline"></ion-icon>
@@ -50,12 +64,13 @@ export default function Post({post}) {
         </BoxHeader>
 
         <p>
-          {description.split(" ")
-            .map(el => 
-              !el.includes("#") ? 
-              el : 
-              el
-            ).join(" ")}
+          {description.split(" ").map((e) => 
+            !e.includes("#") ?
+            e + " " : 
+            <Link to={`/hashtags/${e.replace("#","")}`}>
+              {e + " "}
+            </Link>
+          )}
         </p>
 
         <BoxInfo href={url} target="_blank">
@@ -111,7 +126,8 @@ const Header = styled.div`
 `;
 
 const HeartColor = styled.span`
-  color: ${ ({color})=> color }
+  color: ${ ({color})=> color };
+  /* background-color: red; */
 `
 
 const Content = styled.div`
@@ -123,10 +139,11 @@ const Content = styled.div`
 
   p {
     color: #b7b7b7;
+  }
 
-    span {
-      color: #ffffff;
-    }
+  a {
+    font-weight: bold;
+    color: #ffffff
   }
 `;
 

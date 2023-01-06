@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 
@@ -48,6 +47,7 @@ const Container = styled.aside`
   position: sticky;
   right: 15vh;
   top: 200px;
+  margin-top: 200px;
   background-color: ${colors.SECONDARY_COLOR};
   border-radius: 16px;
 
