@@ -20,13 +20,15 @@ export function findPostsById(id) {
 }
 
 export function insertLike(id) {
-  const response = axios.post(`${BASE_URL}/posts/${id}/like`).catch((err) => console.log(err))
+  console.log(id)
+  const response = axios.post(`${BASE_URL}/posts/${id}/like`,'', {headers}).catch((err) => console.log(err))
 
   return response;
 }
 
 export function deleteLike(id) {
-  const response = axios.delete(`${BASE_URL}/posts/${id}/deslike`).catch((err) => console.log(err))
+  console.log(id)
+  const response = axios.delete(`${BASE_URL}/posts/${id}/deslike`, {headers}).catch((err) => console.log(err))
 
   return response;
 }
