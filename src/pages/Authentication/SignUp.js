@@ -61,12 +61,12 @@ export default function SignUp() {
 
   return (
     <AuthContainer>
-      <div className="left">
+      <div className="container-title">
         <h1>linkr</h1>
         <h2>save, share and discover the best links on the web</h2>
       </div>
 
-      <div className="right">
+      <div className="container-forms">
         <form onSubmit={sendForm}>
           <input
             placeholder="e-mail"
@@ -122,17 +122,22 @@ export default function SignUp() {
 const AuthContainer = styled.div`
   display: flex;
 
-  .left {
-    width: 850px;
+  @media (max-width: 930px) {
+    flex-direction: column;
+  }
+
+  .container-title {
+    width: 60%;
     height: 900px;
     background-color: ${colors.SECONDARY_COLOR};
     display: flex;
     flex-direction: column;
     align-items: center;
     box-shadow: 4px 0px 4px 0px #00000040;
+    z-index: 5;
 
     h1 {
-      margin-top: 160px;
+      margin-top: 130px;
       font-family: 'Passion One', cursive;
       font-size: 106px;
     }
@@ -144,36 +149,55 @@ const AuthContainer = styled.div`
     }
 
     h1, h2 {
-      width: 442px;
+      width: 55%;
       color: white;
-      text-align: left;
       font-weight: 700;
+    }
+
+    @media (max-width: 930px) {
+      width: 100%;
+      height: 350px;
+      justify-content: center;
+      box-shadow: 0px 4px 4px 0px #00000040;
+
+      h1, h2 {
+        margin-top: 0px;
+        width: 70%;
+        text-align: center;
+      }
+    }
+
+    @media (max-width: 435px) {
+      height: 200px;
+
+      h1 {
+        font-size: 70px;
+      }
+      h2 {
+        font-size: 23px;
+        line-height: 1.4;
+      }
     }
   }
 
-  .right {
+  .container-forms {
+    width: 40%;
+    padding: 130px 40px 0px 40px;
     height: 900px;
-    padding-top: 140px;
-    margin-left: 65px;
     display: flex;
     flex-direction: column;
     align-items: center;
 
     form {
+      width: 90%;
       display: flex;
       flex-direction: column;
       align-items: center;
     }
 
     input {
-      width: 370px;
-      height: 65px;
-      border-radius: 6px;
-      margin-bottom: 10px;
-      border: 0px;
       font-family: 'Oswald', sans-serif;
       font-size: 20px;
-      font-weight: 700;
       padding-left: 10px;
     }
 
@@ -185,23 +209,35 @@ const AuthContainer = styled.div`
       padding-left: 5px;
     }
 
-    button {
+    input, button {
+      width: 100%;
       height: 65px;
-      width: 370px;
-      border: 0px;
       border-radius: 6px;
+      margin-bottom: 10px;
+      border: 0px;
+      font-weight: 700;
+    }
+
+    button {
       background-color: ${colors.BUTTON_COLOR};
       font-size: 27px;
       font-family: 'Oswald', sans-serif;
-      font-weight: 700;
       color: white;
       cursor: pointer;
       display: flex;
       justify-content: center;
       align-items: center;
+      transition: all 1s ease-out;
+      &:hover {
+        background-color: ${colors.SECONDARY_COLOR};
+        transition: all 0.5s ease-out;
+        border: 1px solid ${colors.BUTTON_COLOR};
+        border-radius: 20px 20px 0px 20px;
+        color: ${colors.BUTTON_COLOR};
+      }
       &:disabled {
-      opacity: 0.5;
-      cursor: default;
+        opacity: 0.5;
+        cursor: default;
       }
     }
 
@@ -213,6 +249,50 @@ const AuthContainer = styled.div`
       margin-top: 20px;
       border-bottom: 1px solid white;
       padding-bottom: 5px;
+    }
+
+    @media (max-width: 930px) {
+      width: 100%;
+      padding: 70px 0px 0px 0px;
+
+      form {
+        width: 70%;
+      }
+
+      h3 {
+        margin: 10px 0px 200px 0px;
+      }
+    }
+
+    @media (max-width: 435px) {
+      padding: 40px 0px 0px 0px;
+
+      h1 {
+        font-size: 70px;
+      }
+
+      h2 {
+        font-size: 23px;
+        line-height: 1.4;
+      }
+
+      h3 {
+        font-size: 17px;
+      }
+
+      button {
+        height: 55px;
+        font-size: 22px;
+      }
+
+      input {
+        height: 55px;
+        font-size: 17px;
+      }
+
+      input::placeholder {
+        font-size: 20px;
+      }
     }
   }
 `;
