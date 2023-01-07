@@ -1,56 +1,30 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { deleteLike, insertLike } from "../services/posts";
-import { Tooltip } from 'react-tooltip'
 import 'react-tooltip/dist/react-tooltip.css'
+import LikeButton from "./LikeButton";
 
 export default function Post({post}) {
-  const {id, postId, username, profilepicture, url, description, 
-    title, image, linkDescription} = post
-  const [likedBy, setLikedBy] = useState(post.likedBy);  
-  const usernameLogged = getLikesInfo()
-
-  const [userLiked, setUserLiked] = useState(likedBy.includes(usernameLogged))
-  
-
-  function getLikesInfo() {
-    if(likedBy[0] === null) setLikedBy([])
-    return JSON.parse(localStorage.getItem("username"))
-  }
-
-  function deslikePost(id) {
-    setUserLiked(false);
-    for (let i in likedBy) {
-      if (likedBy[i] === usernameLogged) {
-        likedBy.splice(i,i+1)
-        console.log(likedBy)
-        setLikedBy(likedBy);
-      }
-    }
-    deleteLike(id)
-  }
-
-  function likePost(id) {
-    setUserLiked(true);
-    likedBy.unshift(usernameLogged)
-    setLikedBy(likedBy)
-    console.log(likedBy)
-    insertLike(id)
-  }
+  const {
+    id, 
+    postId, 
+    username, 
+    profilepicture, 
+    url, 
+    description, 
+    title, 
+    image, 
+    linkDescription
+  } = post
 
   return (
     <Container>
 
       <Header>
         <img src={profilepicture} alt="user_img"></img>
-        <HeartColor id="likedBy" color={userLiked ? "red" : "none"}>
-          <ion-icon
-            onClick={()=> userLiked ? deslikePost(postId) : likePost(postId) } 
-            name={userLiked ? "heart" : "heart-outline"}/>
-        </HeartColor>
-        <Tooltip anchorId="likedBy" content={postId} />
-        <p>{likedBy.length} likes</p>
+        <LikeButton 
+          likedByPost={post.likedBy} 
+          postId = {postId}
+        />
       </Header>
 
       <Content>
@@ -63,7 +37,7 @@ export default function Post({post}) {
         </BoxHeader>
 
         <p>
-          {description.split(" ").map((e) => 
+          {description && description.split(" ").map((e) => 
             !e.includes("#") ?
             e + " " : 
             <Link to={`/hashtags/${e.replace("#","")}`}>
@@ -128,10 +102,6 @@ const Header = styled.div`
   p {
     font-size: 11px;
   }
-`;
-
-const HeartColor = styled.span`
-  color: ${ ({color})=> color };
 `;
 
 

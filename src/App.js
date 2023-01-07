@@ -21,8 +21,8 @@ function App() {
         <Routes>
           <Route path="*" element={<NotFound />} />
           <Route path="/" element={<SignIn />} />
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/timeline" element={<Timeline />} />
+          <Route path="/signup" element={<SignUp />}/>
+          <Route path="/timeline" element={<Timeline />}/>
           <Route path="/hashtags/:name" element={<Trend />}/>
           <Route path="/user/:id" element={<Timeline isUserPage={true} />} />
         </Routes>

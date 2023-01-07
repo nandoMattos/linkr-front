@@ -23,7 +23,6 @@ export default function Timeline({isUserPage}) {
   }, [isUserPage]);
 
   async function getPosts() {
-    console.log('peguei')
     try {
 			let res;
 			if(isUserPage === true) {
