@@ -21,14 +21,14 @@ export function findPostsById(id) {
 
 export function insertLike(id) {
   console.log(id)
-  const response = axios.post(`${BASE_URL}/posts/${id}/like`,'', config).catch((err) => console.log(err))
+  const response = axios.post(`${BASE_URL}/posts/${id}/like`,'', {headers}).catch((err) => console.log(err))
 
   return response;
 }
 
 export function deleteLike(id) {
   console.log(id)
-  const response = axios.delete(`${BASE_URL}/posts/${id}/deslike`, config).catch((err) => console.log(err))
+  const response = axios.delete(`${BASE_URL}/posts/${id}/deslike`, {headers}).catch((err) => console.log(err))
 
   return response;
 }
