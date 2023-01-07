@@ -3,16 +3,18 @@ import { createHeaders } from "./authService";
 
 const BASE_URL = process.env.REACT_APP_API;
 
-const config = createHeaders();
+const { headers } = createHeaders();
 
 export function findAllPosts() {
-  const response = axios.get(`${BASE_URL}/posts`).catch((err) => err.response);
+  console.log(headers);
+
+  const response = axios.get(`${BASE_URL}/posts`, {headers}).catch((err) => err.response);
 
   return response;
 }
 
 export function findPostsById(id) {
-  const response = axios.get(`${BASE_URL}/posts/user/${id}`).catch((err) => err.response);
+  const response = axios.get(`${BASE_URL}/posts/user/${id}`, {headers}).catch((err) => err.response);
 
   return response;
 }

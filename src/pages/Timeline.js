@@ -8,7 +8,6 @@ import Post from "../components/Post";
 import { findPostsById, findAllPosts } from "../services/posts";
 
 export default function Timeline({isUserPage}) {
-
   const [listPosts, setListPosts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
