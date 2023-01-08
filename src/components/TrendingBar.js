@@ -46,7 +46,8 @@ const Container = styled.aside`
   width: 40vh;
   position: sticky;
   right: 15vh;
-  top: 200px;
+  top: 75px;
+  margin-top: 200px;
   background-color: ${colors.SECONDARY_COLOR};
   border-radius: 16px;
 

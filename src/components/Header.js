@@ -176,7 +176,7 @@ const SearchBar = styled.div`
     color: #C6C6C6;
   }
 
-  @media (max-width: 425px) {
+  @media (max-width: 705px) {
     display: none;
   }
 `;

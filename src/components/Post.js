@@ -1,42 +1,30 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { deleteLike, insertLike } from "../services/posts";
+import 'react-tooltip/dist/react-tooltip.css'
+import LikeButton from "./LikeButton";
 
 export default function Post({post}) {
-  const {id, username, profilepicture, url, description, 
-    title, image, linkDescription} = post
-
-  const [likedBy, setLikedBy] = useState(post.likedBy);
-  if(likedBy[0] === null) setLikedBy([])
-  
-  const [userLiked, setUserLiked] = useState(likedBy.includes("naruto"))
-  
-  function deslikePost(id) {
-    setUserLiked(false);
-    likedBy.shift();
-    setLikedBy(likedBy)
-    deleteLike(id)
-  }
-
-  function likePost(id) {
-    setUserLiked(true);
-    likedBy.unshift("naruto")
-    setLikedBy(likedBy)
-    insertLike(id)
-  }
-
+  const {
+    id, 
+    postId, 
+    username, 
+    profilepicture, 
+    url, 
+    description, 
+    title, 
+    image, 
+    linkDescription
+  } = post
 
   return (
     <Container>
+
       <Header>
         <img src={profilepicture} alt="user_img"></img>
-        <HeartColor color={userLiked ? "red" : "none"}>
-          <ion-icon 
-            onClick={()=> userLiked ? deslikePost(id) : likePost(id) } 
-            name={userLiked ? "heart" : "heart-outline"}/>
-        </HeartColor>
-        <p>{likedBy.length} likes</p>
+        <LikeButton 
+          likedByPost={post.likedBy} 
+          postId = {postId}
+        />
       </Header>
 
       <Content>
@@ -49,12 +37,13 @@ export default function Post({post}) {
         </BoxHeader>
 
         <p>
-          {description.split(" ")
-            .map(el => 
-              !el.includes("#") ? 
-              el : 
-              el
-            ).join(" ")}
+          {description && description.split(" ").map((e) => 
+            !e.includes("#") ?
+            e + " " : 
+            <Link to={`/hashtags/${e.replace("#","")}`}>
+              {e + " "}
+            </Link>
+          )}
         </p>
 
         <BoxInfo href={url} target="_blank">
@@ -115,9 +104,6 @@ const Header = styled.div`
   }
 `;
 
-const HeartColor = styled.span`
-  color: ${ ({color})=> color };
-`;
 
 const Content = styled.div`
   display: flex;
@@ -128,10 +114,11 @@ const Content = styled.div`
 
   p {
     color: #b7b7b7;
+  }
 
-    span {
-      color: #ffffff;
-    }
+  a {
+    font-weight: bold;
+    color: #ffffff
   }
 `;
 

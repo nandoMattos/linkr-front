@@ -25,7 +25,7 @@ export default function SignIn() {
         resetForm();
         localStorage.setItem("profileImg", JSON.stringify(res.data.picture_url));
         localStorage.setItem("token", JSON.stringify(res.data.token));
-        localStorage.setItem("userId", JSON.stringify(res.data.id_user));
+        localStorage.setItem("username", JSON.stringify(res.data.username));
         navigate("/timeline");
         setLoading(false);
       })
@@ -50,12 +50,12 @@ export default function SignIn() {
 
   return (
     <AuthContainer>
-      <div className="left">
+      <div className="container-title">
         <h1>linkr</h1>
         <h2>save, share and discover the best links on the web</h2>
       </div>
 
-      <div className="right">
+      <div className="container-forms">
         <form onSubmit={sendForm}>
           <input
             placeholder="e-mail"
