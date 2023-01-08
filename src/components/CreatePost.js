@@ -43,6 +43,7 @@ export function CreatePost() {
                                     value={form.url}
                                     onChange={handleForm}
                                     placeholder="http://..."
+                                    disabled={disabled}
                                     required
                                 >
                                 </input>
@@ -53,12 +54,13 @@ export function CreatePost() {
                                     type="text"
                                     value={form.description}
                                     onChange={handleForm}
+                                    disabled={disabled}
                                     placeholder="Awesome article about #javascript"
                                 >
                                 </input>
                             </InputDescription>
                             <PostButton>
-                                <button type="submit">{ disabled ? <span>Publishing...</span> : <span>Publish</span>}</button>
+                                <button type="submit" disabled={disabled}>{ disabled ? <span>Publishing...</span> : <span>Publish</span>}</button>
                             </PostButton>
                         </form>
                     </FormPost>
