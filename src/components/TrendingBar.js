@@ -7,6 +7,7 @@ import { getTrendingTopics } from "../services/hashtagService";
 
 export default function TrendingBar({loading}) {
   const [trendings, setTrendings] = useState([]);
+  const [error, setError] = useState(false);
   const navigate = useNavigate();
   
   useEffect(() => {
@@ -17,8 +18,9 @@ export default function TrendingBar({loading}) {
   async function getTrendings() {
     try {
       const res = await getTrendingTopics();
-      setTrendings(res.data);
+      setTrendings(res?.data);
     } catch (err) {
+      setError(true);
       console.log(err);
     }
   }
@@ -27,11 +29,12 @@ export default function TrendingBar({loading}) {
     navigate(`/hashtags/${trendName}`);
   }
 
+  if(error) return ;
   return (
     <Container display={loading ? "none" : "flex"}>
       <Title>trending</Title>
       <Content>
-        {trendings.map((t) => (
+        {trendings?.map((t) => (
           <Trend onClick={()=> getTrendPage(t.name)} key={t.id}>#{t.name}</Trend>
         ))}
       </Content>
