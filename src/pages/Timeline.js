@@ -31,8 +31,15 @@ export default function Timeline({isUserPage}) {
 			} else {
 				res = await findAllPosts();
 			}
-			setListPosts(res.data);
-			setLoading(false);
+      
+      if(res.data === 'Unauthorized') {
+        setError(true);
+        setLoading(false)
+      } else {
+        setListPosts(res.data);
+        setLoading(false);
+      }
+
     }catch(err) {
       console.log(err);
       setError(true);
@@ -46,7 +53,7 @@ export default function Timeline({isUserPage}) {
       {error && <TextInfo>An error occured while trying to fetch the posts, please refresh the page ...</TextInfo>}
       {!isUserPage && <CreatePost />}
       {
-        listPosts && listPosts?.map((post) => <Post post={post} />)
+        listPosts?.map((post) => <Post post={post} />)
       }
     </Main>
   );
