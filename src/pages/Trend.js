@@ -16,7 +16,7 @@ export default function Trend() {
     setLoading(true)
     getPosts();
     //eslint-disable-next-line
-  },[])
+  },[name])
 
   async function getPosts() {
     try{
@@ -36,7 +36,7 @@ export default function Trend() {
       {error && <TextInfo>An error occured while trying to fetch the posts, please refresh the page ...</TextInfo>}
       
       {
-        posts.map((post) => <Post post={post} loading={loading}/>)
+        posts.map((post) => <Post post={post}/>)
       }
     </Main>
   )

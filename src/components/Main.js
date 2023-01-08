@@ -46,6 +46,10 @@ const Title = styled.h1`
   color: #ffffff;
 
   margin-bottom: 10px;
+
+  @media (max-width: 425px) {
+    margin-left: 20px;
+  }
 `;
 
 

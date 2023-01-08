@@ -1,48 +1,35 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { deleteLike, insertLike } from "../services/posts";
+import 'react-tooltip/dist/react-tooltip.css'
+import LikeButton from "./LikeButton";
 
 export default function Post({post}) {
-  const {id, username, profilepicture, url, description, 
-    title, image, linkDescription} = post
-
-  const [likedBy, setLikedBy] = useState(post.likedBy);
-  if(likedBy[0] === null) setLikedBy([])
-  
-  const [userLiked, setUserLiked] = useState(likedBy.includes("naruto"))
-  
-  function deslikePost(id) {
-    setUserLiked(false);
-    likedBy.shift();
-    setLikedBy(likedBy)
-    deleteLike(id)
-  }
-
-  function likePost(id) {
-    setUserLiked(true);
-    likedBy.unshift("naruto")
-    setLikedBy(likedBy)
-    insertLike(id)
-  }
-
+  const {
+    id, 
+    postId, 
+    username, 
+    profilepicture, 
+    url, 
+    description, 
+    title, 
+    image, 
+    linkDescription
+  } = post
 
   return (
     <Container>
+
       <Header>
         <img src={profilepicture} alt="user_img"></img>
-        <HeartColor color={userLiked ? "red" : "none"}>
-          <ion-icon 
-            onClick={()=> userLiked ? deslikePost(id) : likePost(id) } 
-            name={userLiked ? "heart" : "heart-outline"}/>
-        </HeartColor>
-        <p>{likedBy.length} likes</p>
+        <LikeButton 
+          likedByPost={post.likedBy} 
+          postId = {postId}
+        />
       </Header>
 
       <Content>
         <BoxHeader>
-          <Link to={`/user/${id}`}>{username} {id}</Link>
-
+          <Link to={`/user/${id}`}>{username}</Link>
           <BoxSettings>
             <ion-icon name="pencil-outline"></ion-icon>
             <ion-icon name="trash"></ion-icon>
@@ -50,12 +37,13 @@ export default function Post({post}) {
         </BoxHeader>
 
         <p>
-          {description.split(" ")
-            .map(el => 
-              !el.includes("#") ? 
-              el : 
-              el
-            ).join(" ")}
+          {description && description.split(" ").map((e) => 
+            !e.includes("#") ?
+            e + " " : 
+            <Link to={`/hashtags/${e.replace("#","")}`}>
+              {e + " "}
+            </Link>
+          )}
         </p>
 
         <BoxInfo href={url} target="_blank">
@@ -79,6 +67,7 @@ const Container = styled.div`
 
   background-color: #171717;
   height: 270px;
+  
 
   border-radius: 16px;
 
@@ -86,6 +75,10 @@ const Container = styled.div`
 
   color: #ffffff;
   font-family: Lato;
+
+  @media (max-width: 425px) {
+    border-radius: 0px;
+  }
 `;
 
 const Header = styled.div`
@@ -95,7 +88,8 @@ const Header = styled.div`
   gap: 5px;
 
   img {
-    width: 50px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
 
     margin-bottom: 10px;
@@ -110,9 +104,6 @@ const Header = styled.div`
   }
 `;
 
-const HeartColor = styled.span`
-  color: ${ ({color})=> color }
-`
 
 const Content = styled.div`
   display: flex;
@@ -123,10 +114,11 @@ const Content = styled.div`
 
   p {
     color: #b7b7b7;
+  }
 
-    span {
-      color: #ffffff;
-    }
+  a {
+    font-weight: bold;
+    color: #ffffff
   }
 `;
 
@@ -154,6 +146,10 @@ const BoxInfo = styled.a`
     width: 200px;
     border-radius: 0px 12px 12px 0px;
   }
+
+  @media (max-width: 425px) {
+    max-height: 185px;
+  }
 `;
 
 const Info = styled.div`
@@ -179,5 +175,12 @@ const Info = styled.div`
 
   p {
     color: #cecece;
+  }
+
+  @media (max-width: 425px) {
+    h1 {
+      font-size: 10px;
+    }
+    
   }
 `;
