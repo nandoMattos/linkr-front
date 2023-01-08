@@ -28,6 +28,8 @@ const Container = styled(Link)`
         height: 40px;
 
         border-radius: 50%;
+
+        object-fit: cover;
     }
 
     &:hover {
