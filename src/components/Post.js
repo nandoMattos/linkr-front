@@ -118,7 +118,9 @@ const Content = styled.div`
 
   a {
     font-weight: bold;
-    color: #ffffff
+    color: #ffffff;
+
+    max-width: 505px;
   }
 `;
 
@@ -163,6 +165,8 @@ const Info = styled.div`
   padding: 20px 15px;
 
   font-size: 11px;
+
+  overflow-wrap: anywhere;
 
   h1 {
     font-size: 16px;

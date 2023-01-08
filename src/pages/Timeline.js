@@ -31,8 +31,15 @@ export default function Timeline({isUserPage}) {
 			} else {
 				res = await findAllPosts();
 			}
-			setListPosts(res.data);
-			setLoading(false);
+      
+      if(res.data === 'Unauthorized') {
+        setError(true);
+        setLoading(false)
+      } else {
+        setListPosts(res.data);
+        setLoading(false);
+      }
+
     }catch(err) {
       console.log(err);
       setError(true);
@@ -42,11 +49,11 @@ export default function Timeline({isUserPage}) {
 
   return (
     <Main title={isUserPage ? `${username}'s posts` : 'timeline'} loading={loading}>
-      {(loading === false && listPosts.length === 0 && error === false) && <TextInfo>There are no posts yet ...</TextInfo>}
+      {(loading === false && listPosts?.length === 0 && error === false) && <TextInfo>There are no posts yet ...</TextInfo>}
       {error && <TextInfo>An error occured while trying to fetch the posts, please refresh the page ...</TextInfo>}
       {!isUserPage && <CreatePost />}
       {
-        listPosts.map((post) => <Post post={post} />)
+        listPosts?.map((post) => <Post post={post} />)
       }
     </Main>
   );
