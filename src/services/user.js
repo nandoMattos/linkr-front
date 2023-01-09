@@ -1,12 +1,7 @@
-import axios from "axios";
-import { createHeaders } from "./authService";
-
-const BASE_URL = process.env.REACT_APP_API;
-
-const { headers } = createHeaders();
+import api from "./config";
 
 export function findUsersByName(name) {
-  const response = axios.get(`${BASE_URL}/users?name=${name}`, {headers}).catch((err) => err.response);
+  const response = api.get(`/users?name=${name}`).catch((err) => err.response);
 
   return response;
 }
