@@ -17,7 +17,7 @@ export function CreatePost() {
     
     }
     
-    function sendPost(e) {
+    async function sendPost(e) {
         e.preventDefault();
 
         const body = {
@@ -25,9 +25,17 @@ export function CreatePost() {
         }
         console.log(body)
         setDisabled(true)
-        addPost(body);
+        const response = await addPost(body);
         setDisabled(false);
+        console.log(response)
+        if (!response?.status){
+            alert("Houve um erro ao publicar seu link");
+            return
+        }
+        
         setForm({url: "", description: ""})
+        window.location.reload(true);
+        
     }
 
     return (

@@ -44,8 +44,12 @@ export function Trash({postId, username}) {
 
     async function deletePost() {
         const response = await removePost(postId, setModalIsOpen);
-        console.log(response.status)
-        if (response.status !== 200) return
+        //console.log(response.status)
+        if (!response?.status ) {
+            setModalIsOpen(false);
+            alert("Não foi possível excluir o post")
+            return
+        }
         setModalIsOpen(false);
         window.location.reload(true);
     }
@@ -53,7 +57,8 @@ export function Trash({postId, username}) {
 
     return (
         <>
-            { username === myName && <ion-icon onClick={openModal} name="trash"></ion-icon> } 
+            {/* { username === myName && <ion-icon onClick={openModal} name="trash"></ion-icon> }  */}
+            <ion-icon onClick={openModal} name="trash"></ion-icon>
             <Modal
                 isOpen={modalIsOpen}
                 onRequestClose={closeModal}

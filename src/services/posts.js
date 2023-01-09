@@ -36,11 +36,10 @@ export async function addPost(body) {
   return response;
   } catch (error) {
     console.log(error);
-    alert("Houve um erro ao publicar seu link");
   }
 }
 
-export async function removePost(postId, setModalIsOpen) {
+export async function removePost(postId) {
 
   
   try {
@@ -48,10 +47,8 @@ export async function removePost(postId, setModalIsOpen) {
     return response;
     
   } catch (error) {
-    console.log("entrou")
-    setModalIsOpen(false);
-    alert("Não foi possível excluir o post")
-    return
+    //console.log("entrou")
+    console.log(error)
   }
 
   
