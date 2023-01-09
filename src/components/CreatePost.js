@@ -8,6 +8,9 @@ export function CreatePost() {
     const [form, setForm] = useState({url: "", description: ""})
     const [disabled, setDisabled] = useState(false);
 
+    const profileImg = JSON.parse(localStorage.getItem("profileImg"));
+
+
     function handleForm(e) {
         const {name, value} = e.target;
         setForm({...form, [name]: value})
@@ -30,7 +33,7 @@ export function CreatePost() {
     return (
         <Container>
             <Photo>
-                <img src="https://http2.mlstatic.com/D_NQ_NP_846593-MLB50471350726_062022-W.jpg" alt="user_img"></img>
+                <img src={profileImg} alt="user_img"></img>
             </Photo>
                 <Content>
                     <p>What are you going to share today?</p>

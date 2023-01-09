@@ -32,7 +32,7 @@ export function deleteLike(id) {
 export async function addPost(body) {
 
   try {
-  const response = await axios.post(`${BASE_URL}/posts`,body)
+  const response = await axios.post(`${BASE_URL}/posts`, body, {headers})
   return response;
   } catch (error) {
     console.log(error);
@@ -40,8 +40,19 @@ export async function addPost(body) {
   }
 }
 
-export async function removePost(myId) {
-  const response = axios.delete(`${BASE_URL}/posts/${myId}`, {headers}).catch(() => "Não foi possível excluir o post")
+export async function removePost(postId, setModalIsOpen) {
 
-  return response;
+  
+  try {
+    const response = await axios.delete(`${BASE_URL}/posts/${postId}`, {headers})
+    return response;
+    
+  } catch (error) {
+    console.log("entrou")
+    setModalIsOpen(false);
+    alert("Não foi possível excluir o post")
+    return
+  }
+
+  
 }

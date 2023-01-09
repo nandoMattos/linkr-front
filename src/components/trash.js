@@ -1,13 +1,13 @@
 import { useState } from "react";
 import Modal from "react-modal";
 import styled from "styled-components";
+import { removePost } from "../services/posts";
 
 Modal.setAppElement("#root")
 
 export function Trash({postId, username}) {
 
     const myName = JSON.parse(localStorage.getItem("username"));
-    const myId = JSON.parse(localStorage.getItem("id"));
 
     console.log("meu:", myName);
     console.log("do post:",username);
@@ -42,14 +42,18 @@ export function Trash({postId, username}) {
         setModalIsOpen(false);
     }
 
-    function deletePost() {
-        console.log("oi")
+    async function deletePost() {
+        const response = await removePost(postId, setModalIsOpen);
+        console.log(response.status)
+        if (response.status !== 200) return
+        setModalIsOpen(false);
+        window.location.reload(true);
     }
 
 
     return (
         <>
-            { username === myName && <ion-icon onClick={openModal} name="trash"></ion-icon> }
+            { username === myName && <ion-icon onClick={openModal} name="trash"></ion-icon> } 
             <Modal
                 isOpen={modalIsOpen}
                 onRequestClose={closeModal}
