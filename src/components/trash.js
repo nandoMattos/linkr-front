@@ -1,10 +1,16 @@
 import { useState } from "react";
 import Modal from "react-modal";
 import styled from "styled-components";
+import { removePost } from "../services/posts";
 
 Modal.setAppElement("#root")
 
-export function Trash() {
+export function Trash({postId, username}) {
+
+    const myName = JSON.parse(localStorage.getItem("username"));
+
+    console.log("meu:", myName);
+    console.log("do post:",username);
 
     const customStyles = {
         content: {
@@ -36,13 +42,22 @@ export function Trash() {
         setModalIsOpen(false);
     }
 
-    function deletePost() {
-        console.log("oi")
+    async function deletePost() {
+        const response = await removePost(postId, setModalIsOpen);
+        //console.log(response.status)
+        if (!response?.status ) {
+            setModalIsOpen(false);
+            alert("Não foi possível excluir o post")
+            return
+        }
+        setModalIsOpen(false);
+        window.location.reload(true);
     }
 
 
     return (
         <>
+            {/* { username === myName && <ion-icon onClick={openModal} name="trash"></ion-icon> }  */}
             <ion-icon onClick={openModal} name="trash"></ion-icon>
             <Modal
                 isOpen={modalIsOpen}
