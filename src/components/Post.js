@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import 'react-tooltip/dist/react-tooltip.css'
 import LikeButton from "./LikeButton";
+import { Trash } from "./trash";
 
 export default function Post({post}) {
   const {
@@ -32,7 +33,7 @@ export default function Post({post}) {
           <Link to={`/user/${id}`}>{username}</Link>
           <BoxSettings>
             <ion-icon name="pencil-outline"></ion-icon>
-            <ion-icon name="trash"></ion-icon>
+            <Trash></Trash>
           </BoxSettings>
         </BoxHeader>
 
