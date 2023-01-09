@@ -119,6 +119,7 @@ const HeaderContainer = styled.div`
       width: 53px;
       border-radius: 30px;
       object-fit: cover;
+      cursor: pointer;
     }
   }
 `;
