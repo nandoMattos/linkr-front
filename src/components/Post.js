@@ -22,13 +22,14 @@ export default function Post({ post }) {
 
   const inputRef = useRef();
   const [isEdit, setIsEdit] = useState(false);
-  //const [newDescription, setnewDescription] = useState(description)
   const [currentDescription, setCurrentDescription] = useState(description)
+
+  const myName = JSON.parse(localStorage.getItem("username"));
 
   function toggleEdit() {
     setIsEdit(state => !state)
   }
-  
+
   useEffect(() => {
     if (isEdit && inputRef.current) {
       inputRef.current.value = currentDescription;
@@ -47,20 +48,20 @@ export default function Post({ post }) {
         description: e.target.value
       }
       inputRef.current.disabled = true
-      
+
       editPost(postId, body).then((result) => {
         console.log(result)
         if ((result?.status || result?.response?.status) !== 200) {
           alert(result.response.data.message)
-          return 
+          return
         }
-        
+
         toggleEdit()
-        
+
       }).finally(() => {
         inputRef.current.disabled = false
       })
-      
+
     }
   }
 
@@ -79,10 +80,10 @@ export default function Post({ post }) {
       <Content>
         <BoxHeader>
           <Link to={`/user/${id}`}>{username}</Link>
-          <BoxSettings> 
-            <button onClick={toggleEdit} style={{all: "unset"}}>
+          <BoxSettings>
+            {username === myName && <button onClick={toggleEdit} style={{ all: "unset" }}>
               <ion-icon name="pencil-outline"></ion-icon>
-            </button>
+            </button>}
             <Trash postId={postId} username={username} />
           </BoxSettings>
         </BoxHeader>
@@ -91,13 +92,13 @@ export default function Post({ post }) {
             ref={inputRef}
             itemRef={inputRef}
             onKeyDown={key => handleKeyPress(key)}
-            >
+          >
           </input>
-        //   <input onSubmit={sendEdition}
-        //   ref={inputRef}
-        //   onChange={handleInput}
-        //   value={newDescription}>
-        // </input>
+          //   <input onSubmit={sendEdition}
+          //   ref={inputRef}
+          //   onChange={handleInput}
+          //   value={newDescription}>
+          // </input>
         )
           : <PostDescription currentDescription={currentDescription} />
         }
