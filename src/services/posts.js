@@ -50,7 +50,7 @@ export async function removePost(postId) {
 export async function editPost(postId, body) {
 
   try {
-    const response = await api.put(`${BASE_URL}/posts/${postId}`, body, {headers})
+    const response = await api.put(`/posts/${postId}`,body)
     return response;
   } catch (error) {
     return error
