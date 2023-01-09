@@ -1,27 +1,13 @@
-import axios from "axios";
-
-const BASE_URL = process.env.REACT_APP_API;
-
-function createHeaders() {
-  const auth = JSON.parse(localStorage.getItem("token"));
-
-  const config = {
-    headers: {
-      Authorization: `Bearer ${auth}`
-    }
-  }
-
-  return config;
-}
+import api from "./config";
 
 function postSignUp(body) {
-  const promise = axios.post(`${BASE_URL}/signup`, body);
+  const promise = api.post(`/signup`, body);
   return promise;
 }
 
 function postSignIn(body) {
-  const promise = axios.post(`${BASE_URL}/signin`, body);
+  const promise = api.post(`/signin`, body);
   return promise;
 }
 
-export { postSignUp, postSignIn, createHeaders };
+export { postSignUp, postSignIn };
