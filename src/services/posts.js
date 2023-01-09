@@ -51,5 +51,14 @@ export async function removePost(postId) {
     console.log(error)
   }
 
-  
+}
+
+export async function editPost(postId, body) {
+
+  try {
+    const response = await axios.put(`${BASE_URL}/posts/${postId}`, body, {headers})
+    return response;
+  } catch (error) {
+    return error
+  }
 }
