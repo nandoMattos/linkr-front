@@ -9,8 +9,8 @@ export function Trash({postId, username}) {
 
     const myName = JSON.parse(localStorage.getItem("username"));
 
-    console.log("meu:", myName);
-    console.log("do post:",username);
+    // console.log("meu:", myName);
+    // console.log("do post:",username);
 
     const customStyles = {
         content: {
@@ -57,8 +57,8 @@ export function Trash({postId, username}) {
 
     return (
         <>
-            {/* { username === myName && <ion-icon onClick={openModal} name="trash"></ion-icon> }  */}
-            <ion-icon onClick={openModal} name="trash"></ion-icon>
+            { username === myName && <ion-icon onClick={openModal} name="trash"></ion-icon> } 
+            {/* <ion-icon onClick={openModal} name="trash"></ion-icon> */}
             <Modal
                 isOpen={modalIsOpen}
                 onRequestClose={closeModal}

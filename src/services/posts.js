@@ -45,5 +45,14 @@ export async function removePost(postId) {
     console.log(error)
   }
 
-  
+}
+
+export async function editPost(postId, body) {
+
+  try {
+    const response = await api.put(`/posts/${postId}`,body)
+    return response;
+  } catch (error) {
+    return error
+  }
 }
