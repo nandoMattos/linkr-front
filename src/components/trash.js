@@ -4,7 +4,13 @@ import styled from "styled-components";
 
 Modal.setAppElement("#root")
 
-export function Trash() {
+export function Trash({postId, username}) {
+
+    const myName = JSON.parse(localStorage.getItem("username"));
+    const myId = JSON.parse(localStorage.getItem("id"));
+
+    console.log("meu:", myName);
+    console.log("do post:",username);
 
     const customStyles = {
         content: {
@@ -43,7 +49,7 @@ export function Trash() {
 
     return (
         <>
-            <ion-icon onClick={openModal} name="trash"></ion-icon>
+            { username === myName && <ion-icon onClick={openModal} name="trash"></ion-icon> }
             <Modal
                 isOpen={modalIsOpen}
                 onRequestClose={closeModal}

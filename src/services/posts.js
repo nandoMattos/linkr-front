@@ -39,3 +39,9 @@ export async function addPost(body) {
     alert("Houve um erro ao publicar seu link");
   }
 }
+
+export async function removePost(myId) {
+  const response = axios.delete(`${BASE_URL}/posts/${myId}`, {headers}).catch(() => "Não foi possível excluir o post")
+
+  return response;
+}
