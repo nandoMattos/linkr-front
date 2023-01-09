@@ -41,7 +41,8 @@ export default function SignUp() {
       .catch((res) => {
         if (res.response.status === 409) {
           setEmail("");
-          alert("This email already exists, try another one.");
+          setUsername("");
+          alert("This email or username already exists, try another one.");
           setLoading(false);
           return;
         }
@@ -253,6 +254,7 @@ const AuthContainer = styled.div`
 
     @media (max-width: 930px) {
       width: 100%;
+      height: 600px;
       padding: 70px 0px 0px 0px;
 
       form {
@@ -260,7 +262,7 @@ const AuthContainer = styled.div`
       }
 
       h3 {
-        margin: 10px 0px 200px 0px;
+        margin-top: 10px;
       }
     }
 

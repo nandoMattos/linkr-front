@@ -8,6 +8,7 @@ import Trend from "./pages/Trend";
 import UserContext from "./context/UserContext";
 import Overlay from "./components/OverlayLogout";
 import NotFound from "./pages/NotFound";
+import PrivatePage from "./components/PrivatePage";
 
 function App() {
   const [showLogout, setShowLogout] = useState(false);
@@ -22,9 +23,9 @@ function App() {
           <Route path="*" element={<NotFound />} />
           <Route path="/" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />}/>
-          <Route path="/timeline" element={<Timeline />}/>
-          <Route path="/hashtags/:name" element={<Trend />}/>
-          <Route path="/user/:id" element={<Timeline isUserPage={true} />} />
+          <Route path="/timeline" element={<PrivatePage><Timeline /></PrivatePage>}/>
+          <Route path="/hashtags/:name" element={<PrivatePage><Trend /></PrivatePage>}/>
+          <Route path="/user/:id" element={<PrivatePage><Timeline isUserPage={true} /></PrivatePage>} />
         </Routes>
       </UserContext.Provider>
       </BrowserRouter>
