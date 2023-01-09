@@ -33,7 +33,7 @@ export default function Post({post}) {
           <Link to={`/user/${id}`}>{username}</Link>
           <BoxSettings>
             <ion-icon name="pencil-outline"></ion-icon>
-            <Trash></Trash>
+            <Trash postId={postId} username={username}></Trash>
           </BoxSettings>
         </BoxHeader>
 
