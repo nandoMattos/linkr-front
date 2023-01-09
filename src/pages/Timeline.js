@@ -47,6 +47,7 @@ export default function Timeline({isUserPage}) {
     }
   }
 
+
   return (
     <Main title={isUserPage ? `${username}'s posts` : 'timeline'} loading={loading}>
       {(loading === false && listPosts?.length === 0 && error === false) && <TextInfo>There are no posts yet ...</TextInfo>}
