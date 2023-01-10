@@ -6,6 +6,7 @@ import Main from "../components/Main";
 import Post from "../components/Post";
 
 import { findPostsById, findAllPosts } from "../services/posts";
+import { getAllFollowingUsers, verifyFollow } from "../services/user";
 
 export default function Timeline({isUserPage}) {
   const [listPosts, setListPosts] = useState([]);
@@ -14,6 +15,10 @@ export default function Timeline({isUserPage}) {
 
   const { id } = useParams();
   const [username, setUsername] = useState();
+  const [followUser, setFollowUser] = useState();
+  const [listFollowing, setListFollowing] = useState([]);
+
+  const idLoggedUser = JSON.parse(localStorage.getItem("id"));
 
   useEffect(() => {
     setLoading(true); 
@@ -28,8 +33,13 @@ export default function Timeline({isUserPage}) {
 			if(isUserPage === true) {
 				res = await findPostsById(id);
 				setUsername(res.data[0].username);
+
+        const resFollow = await verifyFollow(idLoggedUser, id);
+        setFollowUser(resFollow.data.follow)
 			} else {
 				res = await findAllPosts();
+        const resAllFollowing = await getAllFollowingUsers(idLoggedUser);
+        setListFollowing(resAllFollowing.data);
 			}
       
       if(res.data === 'Unauthorized') {
@@ -49,10 +59,17 @@ export default function Timeline({isUserPage}) {
 
 
   return (
-    <Main title={isUserPage ? `${username}'s posts` : 'timeline'} loading={loading}>
-      {(loading === false && listPosts?.length === 0 && error === false) && <TextInfo>There are no posts yet ...</TextInfo>}
-      {error && <TextInfo>An error occured while trying to fetch the posts, please refresh the page ...</TextInfo>}
+    <Main title={isUserPage ? `${username}'s posts` : 'timeline'} 
+      loading={loading} 
+      isUserPage={isUserPage} 
+      hasFollowedUser={followUser}
+      idUser={id}
+    >
       {!isUserPage && <CreatePost />}
+
+      {(loading === false && listPosts?.length === 0 && listFollowing.length > 0 && error === false) && <TextInfo>No posts found from your friends</TextInfo>}
+      {(loading === false && !isUserPage && listFollowing.length === 0 && error === false) && <TextInfo>You don't follow anyone yet. Search for new friends!</TextInfo>}
+      {error && <TextInfo>An error occured while trying to fetch the posts, please refresh the page ...</TextInfo>}
       {
         listPosts?.map((post) => <Post post={post} />)
       }
