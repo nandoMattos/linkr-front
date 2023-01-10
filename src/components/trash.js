@@ -54,8 +54,8 @@ export function Trash({postId, username}) {
 
     return (
         <>
-            {/* { username === myName && <ion-icon onClick={openModal} name="trash"></ion-icon> }  */}
-            <ion-icon onClick={openModal} name="trash"></ion-icon>
+            { username === myName && <ion-icon onClick={openModal} name="trash"></ion-icon> } 
+            {/* <ion-icon onClick={openModal} name="trash"></ion-icon> */}
             <Modal
                 isOpen={modalIsOpen}
                 onRequestClose={closeModal}

@@ -3,28 +3,77 @@ import styled from "styled-components";
 import 'react-tooltip/dist/react-tooltip.css'
 import LikeButton from "./LikeButton";
 import { Trash } from "./trash";
+import { PostDescription } from "./PostDescription";
+import { useEffect, useRef, useState } from "react";
+import { editPost } from "../services/posts";
 
-export default function Post({post}) {
+export default function Post({ post }) {
   const {
-    id, 
-    postId, 
-    username, 
-    profilepicture, 
-    url, 
-    description, 
-    title, 
-    image, 
+    id,
+    postId,
+    username,
+    profilepicture,
+    url,
+    description,
+    title,
+    image,
     linkDescription
   } = post
+
+  const inputRef = useRef();
+  const [isEdit, setIsEdit] = useState(false);
+  const [currentDescription, setCurrentDescription] = useState(description)
+
+  const myName = JSON.parse(localStorage.getItem("username"));
+
+  function toggleEdit() {
+    setIsEdit(state => !state)
+  }
+
+  useEffect(() => {
+    if (isEdit && inputRef.current) {
+      inputRef.current.value = currentDescription;
+    }
+  }, [isEdit, inputRef, currentDescription])
+
+  async function handleKeyPress(e) {
+    if (e.code === "Escape") {
+      setCurrentDescription(description)
+      toggleEdit()
+    }
+
+    if (e.code === "Enter") {
+      setCurrentDescription(e.target.value)
+      const body = {
+        description: e.target.value
+      }
+      inputRef.current.disabled = true
+
+      editPost(postId, body).then((result) => {
+        console.log(result)
+        if ((result?.status || result?.response?.status) !== 200) {
+          alert(result.response.data.message)
+          return
+        }
+
+        toggleEdit()
+
+      }).finally(() => {
+        inputRef.current.disabled = false
+      })
+
+    }
+  }
+
 
   return (
     <Container>
 
       <Header>
         <img src={profilepicture} alt="user_img"></img>
-        <LikeButton 
-          likedByPost={post.likedBy} 
-          postId = {postId}
+        <LikeButton
+          likedByPost={post.likedBy}
+          postId={postId}
         />
       </Header>
 
@@ -32,20 +81,27 @@ export default function Post({post}) {
         <BoxHeader>
           <Link to={`/user/${id}`}>{username}</Link>
           <BoxSettings>
-            <ion-icon name="pencil-outline"></ion-icon>
-            <Trash postId={postId} username={username}></Trash>
+            {username === myName && <button onClick={toggleEdit} style={{ all: "unset" }}>
+              <ion-icon name="pencil-outline"></ion-icon>
+            </button>}
+            <Trash postId={postId} username={username} />
           </BoxSettings>
         </BoxHeader>
-
-        <p>
-          {description && description.split(" ").map((e) => 
-            !e.includes("#") ?
-            e + " " : 
-            <Link to={`/hashtags/${e.replace("#","")}`}>
-              {e + " "}
-            </Link>
-          )}
-        </p>
+        {isEdit ? (
+          <input
+            ref={inputRef}
+            itemRef={inputRef}
+            onKeyDown={key => handleKeyPress(key)}
+          >
+          </input>
+          //   <input onSubmit={sendEdition}
+          //   ref={inputRef}
+          //   onChange={handleInput}
+          //   value={newDescription}>
+          // </input>
+        )
+          : <PostDescription currentDescription={currentDescription} />
+        }
 
         <BoxInfo href={url} target="_blank">
           <Info>
