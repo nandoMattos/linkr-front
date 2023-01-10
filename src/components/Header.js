@@ -45,7 +45,7 @@ export default function Header() {
         </Link>
 
         <div>
-          <SearchBar onFocus={() => setActive()} onBlur={() => setActive()}>
+          <SearchBar onFocus={() => setActive()} >
             <DebounceInput
               type="text"
               placeholder="Search for people"
