@@ -28,3 +28,9 @@ export function followUser(idFollower, idFollowed) {
 
   return response;
 }
+
+export function getAllFollowingUsers(idFollower) {
+  const response = api.get(`/users/follow`).catch((err) => err.response);
+
+  return response;
+}

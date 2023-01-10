@@ -8,6 +8,8 @@ export default function Main({ title, children, loading, isUserPage, hasFollowed
   const [activeButton, setActiveButton] = useState(false);
   const [userIsFollower, setUserIsFollower] = useState();
 
+  const idFollower = JSON.parse(localStorage.getItem("id"));
+
   useEffect(() => {
     setUserIsFollower(hasFollowedUser);
   }, [hasFollowedUser])
@@ -15,17 +17,17 @@ export default function Main({ title, children, loading, isUserPage, hasFollowed
   async function followAndUnfollowUser() {
     setActiveButton(true);
     try {
-      const idFollower = JSON.parse(localStorage.getItem("id"));
       const res = await followUser(idFollower, idUser);
       setUserIsFollower(res.data.follow);
       setActiveButton(false);
+    
+      if(res.status === 400) {
+        alert("An error occurred");
+      }
     } catch(err) {
-      alert("An error occurred");
       console.log(err)
     }
   }
-
-  console.log(isUserPage)
 
   return (
     <Container>
@@ -36,7 +38,9 @@ export default function Main({ title, children, loading, isUserPage, hasFollowed
             <>
               <Title>
                 <h1>{title}</h1> 
-                {isUserPage && ( userIsFollower ? 
+                {isUserPage && 
+                 (idFollower !== Number(idUser)) &&
+                 (userIsFollower ? 
                   <Button disabled={activeButton} onClick={() => {followAndUnfollowUser()}} className="unfollow">Unfollow</Button> :
                   <Button disabled={activeButton} onClick={() => {followAndUnfollowUser()}} className="follow">Follow</Button> 
                 )}

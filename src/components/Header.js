@@ -31,6 +31,7 @@ export default function Header() {
     const name = e.target.value;
     try {
       const res = await findUsersByName(name);
+      console.log(res.data);
       setListUser(res.data);
     } catch (err) {
       console.log(err);
