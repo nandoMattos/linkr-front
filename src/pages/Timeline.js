@@ -6,6 +6,7 @@ import Main from "../components/Main";
 import Post from "../components/Post";
 
 import { findPostsById, findAllPosts } from "../services/posts";
+import { verifyFollow } from "../services/user";
 
 export default function Timeline({isUserPage}) {
   const [listPosts, setListPosts] = useState([]);
@@ -14,6 +15,7 @@ export default function Timeline({isUserPage}) {
 
   const { id } = useParams();
   const [username, setUsername] = useState();
+  const [followUser, setFollowUser] = useState();
 
   useEffect(() => {
     setLoading(true); 
@@ -28,6 +30,10 @@ export default function Timeline({isUserPage}) {
 			if(isUserPage === true) {
 				res = await findPostsById(id);
 				setUsername(res.data[0].username);
+
+        const idFollower = JSON.parse(localStorage.getItem("id"));
+        const resFollow = await verifyFollow(idFollower, id);
+        setFollowUser(resFollow.data.follow)
 			} else {
 				res = await findAllPosts();
 			}
@@ -49,7 +55,12 @@ export default function Timeline({isUserPage}) {
 
 
   return (
-    <Main title={isUserPage ? `${username}'s posts` : 'timeline'} loading={loading}>
+    <Main title={isUserPage ? `${username}'s posts` : 'timeline'} 
+      loading={loading} 
+      isUserPage={isUserPage} 
+      hasFollowedUser={followUser}
+      idUser={id}
+    >
       {(loading === false && listPosts?.length === 0 && error === false) && <TextInfo>There are no posts yet ...</TextInfo>}
       {error && <TextInfo>An error occured while trying to fetch the posts, please refresh the page ...</TextInfo>}
       {!isUserPage && <CreatePost />}

@@ -9,9 +9,6 @@ export function Trash({postId, username}) {
 
     const myName = JSON.parse(localStorage.getItem("username"));
 
-    console.log("meu:", myName);
-    console.log("do post:",username);
-
     const customStyles = {
         content: {
             display: 'flex',
