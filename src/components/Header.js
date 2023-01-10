@@ -7,6 +7,7 @@ import { colors } from "../assets/constants";
 import { findUsersByName } from "../services/user";
 import UserSearch from "./UserSearch";
 import UserContext from "../context/UserContext";
+import { useOutsideClick } from "../hooks/useClickOutside";
 
 export default function Header() {
   const { showLogout, setShowLogout } = useContext(UserContext);
@@ -31,12 +32,17 @@ export default function Header() {
     const name = e.target.value;
     try {
       const res = await findUsersByName(name);
-      console.log(res.data);
       setListUser(res.data);
     } catch (err) {
       console.log(err);
     }
   }
+
+  function onClickOutsideTheContainer () {
+    setActiveInput(false);
+  }
+
+  const containerRef = useOutsideClick(onClickOutsideTheContainer);
 
   return (
     <>
@@ -45,7 +51,7 @@ export default function Header() {
           <h1>linkr</h1>
         </Link>
 
-        <div>
+        <div ref={containerRef}>
           <SearchBar onFocus={() => setActive()} >
             <DebounceInput
               type="text"
