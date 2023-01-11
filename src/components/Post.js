@@ -20,7 +20,8 @@ export default function Post({ post }) {
     comments,
     title,
     image,
-    linkDescription
+    linkDescription,
+    repost_count
   } = post
 
   const inputRef = useRef();
@@ -77,6 +78,7 @@ export default function Post({ post }) {
     }
   }
 
+  console.log(post)
 
   return (
     <>
@@ -96,7 +98,7 @@ export default function Post({ post }) {
         <p>{commentsNow.length} comments</p>
 
         <ion-icon name="repeat-outline"/>
-        <p>1 re-post</p>
+        <p>{repost_count} re-post</p>
       </Header>
 
       <Content>
