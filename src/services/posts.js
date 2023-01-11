@@ -56,3 +56,11 @@ export async function editPost(postId, body) {
     return error
   }
 }
+
+export async function insertComment(postId, comment) {
+  try {
+    await api.post(`posts/${postId}/comments`, comment)
+  } catch (err) {
+    console.log(err)
+  }
+}

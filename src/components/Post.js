@@ -16,6 +16,8 @@ export default function Post({ post }) {
     profilepicture,
     url,
     description,
+    likedBy,
+    comments,
     title,
     image,
     linkDescription
@@ -25,30 +27,16 @@ export default function Post({ post }) {
   const [isEdit, setIsEdit] = useState(false);
   const [currentDescription, setCurrentDescription] = useState(description)
   const [isCommentsOpened, setIsCommentsOpened] = useState(false)
-
-  const [comments, setComments] = useState(
-    [
-      {
-        id:4, 
-        username: "sakura", 
-        comment:'gostei gostei gostei gostei gostei gostei gostei gostei gostei gostei gostei gostei gostei gostei gostei gostei gostei gostei gostei gostei gostei gostei gostei gostei gostei gostei gostei gostei gostei gostei gostei gostei gostei ',
-        profile_picture: "https://miro.medium.com/max/1400/0*V1lTn483EV91u-FW"
-      },
-      {
-        id:5,
-        username: "sasuke",
-        comment: "nao gostei",
-        profile_picture: "https://observatoriodocinema.uol.com.br/wp-content/uploads/2022/09/sasuke-uchiha-naruto-shippuden-1.jpg"
-      },
-      {
-        id:5,
-        username: "sasuke",
-        comment: "mentira gostei sim",
-        profile_picture: "https://observatoriodocinema.uol.com.br/wp-content/uploads/2022/09/sasuke-uchiha-naruto-shippuden-1.jpg"
-      }
-  ])
+  const [commentsNow, setCommentsNow] = useState(getComments());
 
   const myName = JSON.parse(localStorage.getItem("username"));
+
+  function getComments() {
+    if(comments[0].id === null) {
+      return []
+    }
+    return comments;
+  }
 
   function toggleEdit() {
     setIsEdit(state => !state)
@@ -98,12 +86,14 @@ export default function Post({ post }) {
         <img src={profilepicture} alt="user_img"></img>
 
         <LikeButton
-          likedByPost={post.likedBy}
+          likedByPost={likedBy}
           postId={postId}
         />
    
-        <ion-icon onClick={()=>setIsCommentsOpened(!isCommentsOpened)} name="chatbubbles-outline"></ion-icon>
-        <p>{comments.length} comments</p>
+        <ion-icon 
+          onClick={()=>setIsCommentsOpened(!isCommentsOpened)} name="chatbubbles-outline"
+        />
+        <p>{commentsNow.length} comments</p>
 
         <ion-icon name="repeat-outline"/>
         <p>1 re-post</p>
@@ -148,7 +138,9 @@ export default function Post({ post }) {
     </Container>
     <Comments 
       isCommentsOpened={isCommentsOpened}
-      comments={comments}
+      commentsNow={commentsNow}
+      setCommentsNow={setCommentsNow}
+      postId={postId}
     />
     </>
   );
