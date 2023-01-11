@@ -101,7 +101,7 @@ export default function Post({ post }) {
 
       <Content>
         <BoxHeader>
-          <Link to={`/user/${id}`}>{username} {postId}</Link>
+          <Link to={`/user/${id}`}>{username}</Link>
           <BoxSettings>
             {username === myName && <button onClick={toggleEdit} style={{ all: "unset" }}>
               <ion-icon name="pencil-outline"></ion-icon>
@@ -140,6 +140,7 @@ export default function Post({ post }) {
       isCommentsOpened={isCommentsOpened}
       commentsNow={commentsNow}
       setCommentsNow={setCommentsNow}
+      postId={postId}
     />
     </>
   );

@@ -1,14 +1,19 @@
 import { useState } from "react";
 import styled from "styled-components";
 import { colors } from "../assets/constants";
+import { insertComment } from "../services/posts";
 
-export default function Comments({ isCommentsOpened, commentsNow, setCommentsNow }) {
+export default function Comments({
+  isCommentsOpened,
+  commentsNow,
+  setCommentsNow,
+  postId,
+}) {
   const [form, setForm] = useState({ comment: "" });
 
   const profileImg = JSON.parse(localStorage.getItem("profileImg"));
   const username = JSON.parse(localStorage.getItem("username"));
 
- 
   function handleForm(e) {
     setForm({
       ...form,
@@ -22,11 +27,13 @@ export default function Comments({ isCommentsOpened, commentsNow, setCommentsNow
       return;
     }
 
+    insertComment(postId, form)
     setCommentsNow([
       ...commentsNow,
       { ...form, profile_picture: profileImg, username },
     ]);
     form.comment = "";
+
   }
 
   function handleKeyPress(e) {
@@ -36,9 +43,7 @@ export default function Comments({ isCommentsOpened, commentsNow, setCommentsNow
   }
 
   return (
-    <AllCommentsContainer
-      display={isCommentsOpened ? "flex" : "none"}
-    >
+    <AllCommentsContainer display={isCommentsOpened ? "flex" : "none"}>
       {commentsNow.length === 0 ? (
         <TextInfo>There are no comments yet</TextInfo>
       ) : (
