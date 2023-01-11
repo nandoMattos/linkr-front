@@ -78,7 +78,6 @@ const Timeline = styled.div`
 
   width: 600px;
 
-  gap: 15px;
 `;
 
 const Title = styled.div`

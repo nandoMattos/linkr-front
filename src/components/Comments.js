@@ -1,18 +1,48 @@
+import { useState } from "react";
 import styled from "styled-components";
 import { colors } from "../assets/constants";
 
-export default function Comments({ isCommentsOpened, comments }) {
+export default function Comments({ isCommentsOpened, commentsNow, setCommentsNow }) {
+  const [form, setForm] = useState({ comment: "" });
+
   const profileImg = JSON.parse(localStorage.getItem("profileImg"));
+  const username = JSON.parse(localStorage.getItem("username"));
+
+ 
+  function handleForm(e) {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value,
+    });
+  }
+
+  function sendMessage() {
+    if (form.comment === "") {
+      alert("Comment must be filled out");
+      return;
+    }
+
+    setCommentsNow([
+      ...commentsNow,
+      { ...form, profile_picture: profileImg, username },
+    ]);
+    form.comment = "";
+  }
+
+  function handleKeyPress(e) {
+    if (e.code === "Enter") {
+      sendMessage();
+    }
+  }
 
   return (
     <AllCommentsContainer
       display={isCommentsOpened ? "flex" : "none"}
-      justify={comments.length === 0 ? "center" : "inital"}
     >
-      {comments.length === 0 ? (
+      {commentsNow.length === 0 ? (
         <TextInfo>There are no comments yet</TextInfo>
       ) : (
-        comments.map((c) => (
+        commentsNow.map((c) => (
           <CommentContainer>
             <UserImage src={c.profile_picture} />
             <CommentDiv>
@@ -25,8 +55,16 @@ export default function Comments({ isCommentsOpened, comments }) {
 
       <InsertCommentDiv>
         <UserImage src={profileImg} />
-        <InputComment placeholder="write a comment..." />
-        <ion-icon name="paper-plane-outline" />
+        <InputComment
+          placeholder="write a comment..."
+          type="text"
+          name="comment"
+          onChange={handleForm}
+          value={form.comment}
+          onKeyPress={handleKeyPress}
+        />
+
+        <ion-icon onClick={() => sendMessage()} name="paper-plane-outline" />
       </InsertCommentDiv>
     </AllCommentsContainer>
   );
@@ -36,11 +74,12 @@ const AllCommentsContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: ${({ justify }) => justify};
+  justify-content: center;
   width: 100%;
   height: fit-content;
   min-height: 100px;
   border-radius: 0 0 16px 16px;
+  padding-top: 15px;
   display: ${({ display }) => display};
   background-color: #1e1e1e;
 `;
@@ -60,7 +99,7 @@ const CommentContainer = styled.div`
 
   width: 100%;
   height: fit-content;
-  min-height: 80px;
+  min-height: 75px;
 
   color: #acacac;
   font-family: Lato;
