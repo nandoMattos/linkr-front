@@ -32,7 +32,7 @@ export default function Timeline({isUserPage}) {
 			let res;
 			if(isUserPage === true) {
 				res = await findPostsById(id);
-				setUsername(res.data.username);
+				setUsername(res.data[0].username);
 
         const resFollow = await verifyFollow(idLoggedUser, id);
         setFollowUser(resFollow.data.follow)
