@@ -32,7 +32,7 @@ export default function Timeline({isUserPage}) {
 			let res;
 			if(isUserPage === true) {
 				res = await findPostsById(id);
-				setUsername(res.data[0].username);
+				setUsername(res.data.username);
 
         const resFollow = await verifyFollow(idLoggedUser, id);
         setFollowUser(resFollow.data.follow)
@@ -46,7 +46,7 @@ export default function Timeline({isUserPage}) {
         setError(true);
         setLoading(false)
       } else {
-        setListPosts(res.data);
+        setListPosts(res.data.posts || res.data);
         setLoading(false);
       }
 
@@ -57,6 +57,10 @@ export default function Timeline({isUserPage}) {
     }
   }
 
+  const noPostText = loading === false && !isUserPage && listPosts?.length === 0 && listFollowing.length > 0 && error === false;
+  const noFollowText = loading === false && !isUserPage && listFollowing.length === 0 && error === false;
+  const noUserPostText = loading === false && isUserPage && listPosts?.length === 0 && error === false;
+
 
   return (
     <Main title={isUserPage ? `${username}'s posts` : 'timeline'} 
@@ -66,9 +70,9 @@ export default function Timeline({isUserPage}) {
       idUser={id}
     >
       {!isUserPage && <CreatePost />}
-
-      {(loading === false && listPosts?.length === 0 && listFollowing.length > 0 && error === false) && <TextInfo>No posts found from your friends</TextInfo>}
-      {(loading === false && !isUserPage && listFollowing.length === 0 && error === false) && <TextInfo>You don't follow anyone yet. Search for new friends!</TextInfo>}
+      {noUserPostText && <TextInfo>No posts found from this user</TextInfo>}
+      {noPostText && <TextInfo>No posts found from your friends</TextInfo>}
+      {noFollowText && <TextInfo>You don't follow anyone yet. Search for new friends!</TextInfo>}
       {error && <TextInfo>An error occured while trying to fetch the posts, please refresh the page ...</TextInfo>}
       {
         listPosts?.map((post) => <Post post={post} />)

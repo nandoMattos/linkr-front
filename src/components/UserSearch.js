@@ -2,12 +2,14 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export default function UserSearch({user}) {
-    const { id, username, picture_url } = user;
+    const { id, username, picture_url, follows } = user;
 
     return (
         <Container to={`/user/${id}`}>
             <img src={picture_url} alt="img_user" />
             <p>{username}</p>
+            {follows && <p className="following">• following</p>}
+            
         </Container>
     );
 }
@@ -30,6 +32,11 @@ const Container = styled(Link)`
         border-radius: 50%;
 
         object-fit: cover;
+    }
+
+    .following {
+        font-size: 16px;
+        color: #C5C5C5;
     }
 
     &:hover {
