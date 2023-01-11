@@ -6,6 +6,7 @@ import { Trash } from "./trash";
 import { PostDescription } from "./PostDescription";
 import { useEffect, useRef, useState } from "react";
 import { editPost } from "../services/posts";
+import Comments from "./Comments";
 
 export default function Post({ post }) {
   const {
@@ -23,6 +24,29 @@ export default function Post({ post }) {
   const inputRef = useRef();
   const [isEdit, setIsEdit] = useState(false);
   const [currentDescription, setCurrentDescription] = useState(description)
+  const [isCommentsOpened, setIsCommentsOpened] = useState(false)
+
+  const [comments, setComments] = useState(
+    [
+      {
+        id:4, 
+        username: "sakura", 
+        comment:'gostei gostei gostei gostei gostei gostei gostei gostei gostei gostei gostei gostei gostei gostei gostei gostei gostei gostei gostei gostei gostei gostei gostei gostei gostei gostei gostei gostei gostei gostei gostei gostei gostei ',
+        profile_picture: "https://miro.medium.com/max/1400/0*V1lTn483EV91u-FW"
+      },
+      {
+        id:5,
+        username: "sasuke",
+        comment: "nao gostei",
+        profile_picture: "https://observatoriodocinema.uol.com.br/wp-content/uploads/2022/09/sasuke-uchiha-naruto-shippuden-1.jpg"
+      },
+      {
+        id:5,
+        username: "sasuke",
+        comment: "mentira gostei sim",
+        profile_picture: "https://observatoriodocinema.uol.com.br/wp-content/uploads/2022/09/sasuke-uchiha-naruto-shippuden-1.jpg"
+      }
+  ])
 
   const myName = JSON.parse(localStorage.getItem("username"));
 
@@ -67,14 +91,22 @@ export default function Post({ post }) {
 
 
   return (
-    <Container>
+    <>
+    <Container radius={isCommentsOpened ? "16px 16px 0 0" : "16px"}>
 
       <Header>
         <img src={profilepicture} alt="user_img"></img>
+
         <LikeButton
           likedByPost={post.likedBy}
           postId={postId}
         />
+   
+        <ion-icon onClick={()=>setIsCommentsOpened(!isCommentsOpened)} name="chatbubbles-outline"></ion-icon>
+        <p>{comments.length} comments</p>
+
+        <ion-icon name="repeat-outline"/>
+        <p>1 re-post</p>
       </Header>
 
       <Content>
@@ -114,6 +146,11 @@ export default function Post({ post }) {
         </BoxInfo>
       </Content>
     </Container>
+    <Comments 
+      isCommentsOpened={isCommentsOpened}
+      comments={comments}
+    />
+    </>
   );
 }
 
@@ -126,9 +163,10 @@ const Container = styled.div`
   height: 270px;
   
 
-  border-radius: 16px;
+  border-radius: ${({radius})=>radius};
 
   padding: 15px 20px;
+  margin-top: 15px;
 
   color: #ffffff;
   font-family: Lato;
@@ -141,8 +179,12 @@ const Container = styled.div`
 const Header = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: space-around;
   align-items: center;
   gap: 5px;
+  height: 100%;
+  width: 10%;
+  margin-bottom: 0;
 
   img {
     width: 40px;
@@ -157,10 +199,9 @@ const Header = styled.div`
   }
 
   p {
-    font-size: 11px;
+    font-size: 10px;
   }
 `;
-
 
 const Content = styled.div`
   display: flex;
