@@ -7,6 +7,7 @@ import { PostDescription } from "./PostDescription";
 import { useEffect, useRef, useState } from "react";
 import { editPost } from "../services/posts";
 import Comments from "./Comments";
+import { Repost } from "./Repost";
 
 export default function Post({ post }) {
   const {
@@ -24,6 +25,8 @@ export default function Post({ post }) {
     repost_count,
     reposted_by
   } = post
+
+  console.log(post)
 
   const inputRef = useRef();
   const [isEdit, setIsEdit] = useState(false);
@@ -104,8 +107,7 @@ export default function Post({ post }) {
           />
           <p>{commentsNow.length} comments</p>
 
-          <ion-icon name="repeat-outline" />
-          <p>{repost_count} re-post</p>
+          <Repost postId={postId}></Repost>
         </Header>
 
         <Content>
