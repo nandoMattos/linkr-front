@@ -26,7 +26,7 @@ export default function Post({ post }) {
     reposted_by
   } = post
 
-  console.log(post)
+  console.log(post);
 
   const inputRef = useRef();
   const [isEdit, setIsEdit] = useState(false);
@@ -84,10 +84,11 @@ export default function Post({ post }) {
   }
 
   return (
-    <>
+    <BigContainer>
       <RepostedBy>
-          <ion-icon name="repeat-outline" />
-          <p>Re-posted by you</p>
+          {/* <ion-icon name="repeat-outline" />
+          <p>Re-posted by you</p> */}
+          <Repost postId={postId} ></Repost>
       </RepostedBy>
       <Container radius={repost && !isCommentsOpened ? "0px 0px 16px 16px" : !repost && 
       isCommentsOpened ? "16px 16px 0 0" : repost && isCommentsOpened ? "0px" :"16px"}>
@@ -151,9 +152,13 @@ export default function Post({ post }) {
         setCommentsNow={setCommentsNow}
         postId={postId}
       />
-    </>
+    </BigContainer>
   );
 }
+
+const BigContainer = styled.div`
+  margin-bottom: 15px;
+`
 
 const Container = styled.div`
   display: flex;
