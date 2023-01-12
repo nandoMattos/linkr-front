@@ -5,6 +5,7 @@ import { CreatePost } from "../components/CreatePost";
 import Main from "../components/Main";
 import Post from "../components/Post";
 import Scroll from "../components/Scroll";
+import SearchBar from "../components/SearchBar";
 
 import { findPostsById, findAllPosts } from "../services/posts";
 import { getAllFollowingUsers, verifyFollow } from "../services/user";
@@ -76,7 +77,6 @@ export default function Timeline({ isUserPage }) {
       {noPostText && <TextInfo>No posts found from your friends</TextInfo>}
       {noFollowText && <TextInfo>You don't follow anyone yet. Search for new friends!</TextInfo>}
       {error && <TextInfo>An error occured while trying to fetch the posts, please refresh the page ...</TextInfo>}
-
       {isUserPage ? 
       (<>{listPosts?.map((post) => <Post post={post} />)}</>)
       : 
