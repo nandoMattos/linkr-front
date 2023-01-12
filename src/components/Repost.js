@@ -1,11 +1,12 @@
 import { useState } from "react";
 import Modal from "react-modal";
 import styled from "styled-components";
+import { repostPost } from "../services/posts";
 
 
 Modal.setAppElement("#root");
 
-export function Repost() {
+export function Repost( { postId }) {
 
     const customStyles = {
         content: {
@@ -37,6 +38,12 @@ export function Repost() {
         setModalIsOpen(false);
     }
 
+    async function sendRepost() {
+        console.log(postId)
+        const response = await repostPost(postId);
+        if (!response?.status) alert("Não foi possivel compartilhar o post")
+        console.log(response.status);
+    }
 
     return (
         <>
@@ -51,7 +58,7 @@ export function Repost() {
                 <Text><p>Do you want to re-post this link?</p></Text>
                 <ButtonsSession>
                     <button style={{ color: "#1877F2", backgroundColor: "#FFFFFF" }} onClick={closeModal}>No, cancel</button>
-                    <button style={{ color: "#FFFFFF", backgroundColor: "#1877F2" }}>Yes, share</button>
+                    <button style={{ color: "#FFFFFF", backgroundColor: "#1877F2" }} onClick={sendRepost}>Yes, share</button>
                 </ButtonsSession>
             </Modal>
         </>
