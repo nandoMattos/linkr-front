@@ -9,7 +9,7 @@ import { editPost } from "../services/posts";
 import Comments from "./Comments";
 import { Repost } from "./Repost";
 
-export default function Post({ post }) {
+export default function Post({ post, listFollowing }) {
   const {
     id,
     postId,
@@ -25,7 +25,7 @@ export default function Post({ post }) {
     repost_count,
     reposted_by
   } = post
-
+  
   console.log(post);
 
   const inputRef = useRef();
@@ -68,7 +68,6 @@ export default function Post({ post }) {
       inputRef.current.disabled = true
 
       editPost(postId, body).then((result) => {
-        console.log(result)
         if ((result?.status || result?.response?.status) !== 200) {
           alert(result.response.data.message)
           return
@@ -151,6 +150,8 @@ export default function Post({ post }) {
         commentsNow={commentsNow}
         setCommentsNow={setCommentsNow}
         postId={postId}
+        listFollowing={listFollowing}
+        postBelongerId = {id}
       />
     </BigContainer>
   );

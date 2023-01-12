@@ -78,11 +78,11 @@ export default function Timeline({ isUserPage }) {
       {error && <TextInfo>An error occured while trying to fetch the posts, please refresh the page ...</TextInfo>}
 
       {isUserPage ? 
-      (<>{listPosts?.map((post) => <Post post={post} />)}</>)
+      (<>{listPosts?.map((post) => <Post listFollowing={listFollowing} post={post} />)}</>)
       : 
       (
         <Scroll listPosts={listPosts} setListPosts={setListPosts}>
-          {listPosts?.map((post) => <Post post={post} />)}
+          {listPosts?.map((post) => <Post listFollowing={listFollowing} post={post} />)}
         </Scroll>
       )}
     </Main>
