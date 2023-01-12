@@ -84,7 +84,7 @@ export default function Post({ post }) {
   }
 
   return (
-    <>
+    <BigContainer>
       <RepostedBy>
           <ion-icon name="repeat-outline" />
           <p>Re-posted by you</p>
@@ -151,9 +151,13 @@ export default function Post({ post }) {
         setCommentsNow={setCommentsNow}
         postId={postId}
       />
-    </>
+    </BigContainer>
   );
 }
+
+const BigContainer = styled.div`
+  margin-bottom: 15px;
+`
 
 const Container = styled.div`
   display: flex;

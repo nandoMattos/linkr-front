@@ -64,3 +64,12 @@ export async function insertComment(postId, comment) {
     console.log(err)
   }
 }
+
+export async function repostPost(postId) {
+  try {
+    const response = await api.post(`posts/${postId}/repost`)
+    return response;
+  } catch (error) {
+    return error;
+  }
+}
