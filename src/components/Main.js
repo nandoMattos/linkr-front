@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Header from "./Header";
 import TrendingBar from "./TrendingBar";
 import { followUser } from "../services/user";
+import SearchBar from "./SearchBar";
 
 export default function Main({ title, children, loading, isUserPage, hasFollowedUser, idUser }) {
   const [activeButton, setActiveButton] = useState(false);
@@ -36,6 +37,8 @@ export default function Main({ title, children, loading, isUserPage, hasFollowed
         <Timeline>
           {loading ? <TextInfo>Loading ...</TextInfo> : (
             <>
+                <SearchBar mobile={true}/>
+              
               <Title>
                 <h1>{title}</h1> 
                 {isUserPage && 
@@ -95,6 +98,7 @@ const Title = styled.div`
 
     @media (max-width: 425px) {
       margin-left: 20px;
+      margin-top: 20px;
     }
   }
 
