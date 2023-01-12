@@ -78,8 +78,6 @@ export default function Post({ post }) {
     }
   }
 
-  console.log(post)
-
   return (
     <>
     <Container radius={isCommentsOpened ? "16px 16px 0 0" : "16px"}>

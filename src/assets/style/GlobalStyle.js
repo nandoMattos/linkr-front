@@ -57,6 +57,24 @@ const GlobalStyle = createGlobalStyle`
   ion-icon {
     cursor: pointer;
   }
+  .scroll-loader {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 50px 0px 150px 0px;
+    img {
+      width: 60px;
+      margin-bottom: 10px;
+    }
+    p {
+      font-family: 'Lato', sans-serif;
+      font-weight: 400;
+      font-size: 22px;
+      letter-spacing: 0.05em;
+      color: #6d6d6d;
+    }
+  }
 `;
 
 export default GlobalStyle;

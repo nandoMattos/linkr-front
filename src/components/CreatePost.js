@@ -90,6 +90,7 @@ const Container = styled.div`
   border-radius: 16px;
 
   padding: 15px 20px;
+  margin-top: 20px;
 
   color: #ffffff;
   font-family: Lato;
