@@ -1,7 +1,7 @@
 import api from "./config";
 
-export function findAllPosts() {
-  const response = api.get(`/posts`).catch((err) => err.response);
+export function findAllPosts(query) {
+  const response = api.get(`/posts${query}`).catch((err) => err.response);
 
   return response;
 }

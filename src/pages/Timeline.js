@@ -4,11 +4,12 @@ import styled from "styled-components";
 import { CreatePost } from "../components/CreatePost";
 import Main from "../components/Main";
 import Post from "../components/Post";
+import Scroll from "../components/Scroll";
 
 import { findPostsById, findAllPosts } from "../services/posts";
 import { getAllFollowingUsers, verifyFollow } from "../services/user";
 
-export default function Timeline({isUserPage}) {
+export default function Timeline({ isUserPage }) {
   const [listPosts, setListPosts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
@@ -21,7 +22,7 @@ export default function Timeline({isUserPage}) {
   const idLoggedUser = JSON.parse(localStorage.getItem("id"));
 
   useEffect(() => {
-    setLoading(true); 
+    setLoading(true);
     getPosts();
 
     //eslint-disable-next-line
@@ -29,20 +30,21 @@ export default function Timeline({isUserPage}) {
 
   async function getPosts() {
     try {
-			let res;
-			if(isUserPage === true) {
-				res = await findPostsById(id);
-				setUsername(res.data.username);
+      let res;
+      if (isUserPage === true) {
+        res = await findPostsById(id);
+        setUsername(res.data.username);
 
         const resFollow = await verifyFollow(idLoggedUser, id);
         setFollowUser(resFollow.data.follow)
-			} else {
-				res = await findAllPosts();
+      } else {
+        const query = "";
+        res = await findAllPosts(query);
         const resAllFollowing = await getAllFollowingUsers(idLoggedUser);
         setListFollowing(resAllFollowing.data);
-			}
-      
-      if(res.data === 'Unauthorized') {
+      }
+
+      if (res.data === 'Unauthorized') {
         setError(true);
         setLoading(false)
       } else {
@@ -50,7 +52,7 @@ export default function Timeline({isUserPage}) {
         setLoading(false);
       }
 
-    }catch(err) {
+    } catch (err) {
       console.log(err);
       setError(true);
       setLoading(false)
@@ -63,9 +65,9 @@ export default function Timeline({isUserPage}) {
 
 
   return (
-    <Main title={isUserPage ? `${username}'s posts` : 'timeline'} 
-      loading={loading} 
-      isUserPage={isUserPage} 
+    <Main title={isUserPage ? `${username}'s posts` : 'timeline'}
+      loading={loading}
+      isUserPage={isUserPage}
       hasFollowedUser={followUser}
       idUser={id}
     >
@@ -74,9 +76,15 @@ export default function Timeline({isUserPage}) {
       {noPostText && <TextInfo>No posts found from your friends</TextInfo>}
       {noFollowText && <TextInfo>You don't follow anyone yet. Search for new friends!</TextInfo>}
       {error && <TextInfo>An error occured while trying to fetch the posts, please refresh the page ...</TextInfo>}
-      {
-        listPosts?.map((post) => <Post post={post} />)
-      }
+
+      {isUserPage ? 
+      (<>{listPosts?.map((post) => <Post post={post} />)}</>)
+      : 
+      (
+        <Scroll listPosts={listPosts} setListPosts={setListPosts}>
+          {listPosts?.map((post) => <Post post={post} />)}
+        </Scroll>
+      )}
     </Main>
   );
 }
