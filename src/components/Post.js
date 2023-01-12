@@ -26,7 +26,7 @@ export default function Post({ post }) {
     reposted_by
   } = post
 
-  console.log(post)
+  console.log(post);
 
   const inputRef = useRef();
   const [isEdit, setIsEdit] = useState(false);
