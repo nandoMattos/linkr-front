@@ -7,6 +7,7 @@ import { PostDescription } from "./PostDescription";
 import { useEffect, useRef, useState } from "react";
 import { editPost } from "../services/posts";
 import Comments from "./Comments";
+import { Repost } from "./Repost";
 
 export default function Post({ post }) {
   const {
@@ -21,19 +22,23 @@ export default function Post({ post }) {
     title,
     image,
     linkDescription,
-    repost_count
+    repost_count,
+    reposted_by
   } = post
+
+  console.log(post)
 
   const inputRef = useRef();
   const [isEdit, setIsEdit] = useState(false);
   const [currentDescription, setCurrentDescription] = useState(description)
   const [isCommentsOpened, setIsCommentsOpened] = useState(false)
   const [commentsNow, setCommentsNow] = useState(getComments());
+  const repost = true
 
   const myName = JSON.parse(localStorage.getItem("username"));
 
   function getComments() {
-    if(comments[0].id === null) {
+    if (comments[0].id === null) {
       return []
     }
     return comments;
@@ -82,68 +87,72 @@ export default function Post({ post }) {
 
   return (
     <>
-    <Container radius={isCommentsOpened ? "16px 16px 0 0" : "16px"}>
+      <RepostedBy>
+          <ion-icon name="repeat-outline" />
+          <p>Re-posted by you</p>
+      </RepostedBy>
+      <Container radius={repost && !isCommentsOpened ? "0px 0px 16px 16px" : !repost && 
+      isCommentsOpened ? "16px 16px 0 0" : repost && isCommentsOpened ? "0px" :"16px"}>
 
-      <Header>
-        <img src={profilepicture} alt="user_img"></img>
+        <Header>
+          <img src={profilepicture} alt="user_img"></img>
 
-        <LikeButton
-          likedByPost={likedBy}
-          postId={postId}
-        />
-   
-        <ion-icon 
-          onClick={()=>setIsCommentsOpened(!isCommentsOpened)} name="chatbubbles-outline"
-        />
-        <p>{commentsNow.length} comments</p>
+          <LikeButton
+            likedByPost={likedBy}
+            postId={postId}
+          />
 
-        <ion-icon name="repeat-outline"/>
-        <p>{repost_count} re-post</p>
-      </Header>
+          <ion-icon
+            onClick={() => setIsCommentsOpened(!isCommentsOpened)} name="chatbubbles-outline"
+          />
+          <p>{commentsNow.length} comments</p>
 
-      <Content>
-        <BoxHeader>
-          <Link to={`/user/${id}`}>{username}</Link>
-          <BoxSettings>
-            {username === myName && <button onClick={toggleEdit} style={{ all: "unset" }}>
-              <ion-icon name="pencil-outline"></ion-icon>
-            </button>}
-            <Trash postId={postId} username={username} />
-          </BoxSettings>
-        </BoxHeader>
-        {isEdit ? (
-          <input
-            ref={inputRef}
-            itemRef={inputRef}
-            onKeyDown={key => handleKeyPress(key)}
-          >
-          </input>
-          //   <input onSubmit={sendEdition}
-          //   ref={inputRef}
-          //   onChange={handleInput}
-          //   value={newDescription}>
-          // </input>
-        )
-          : <PostDescription currentDescription={currentDescription} />
-        }
+          <Repost postId={postId}></Repost>
+        </Header>
 
-        <BoxInfo href={url} target="_blank">
-          <Info>
-            <h1>{title}</h1>
-            <h2>{linkDescription}</h2>
-            <p>{url}</p>
-          </Info>
+        <Content>
+          <BoxHeader>
+            <Link to={`/user/${id}`}>{username}</Link>
+            <BoxSettings>
+              {username === myName && <button onClick={toggleEdit} style={{ all: "unset" }}>
+                <ion-icon name="pencil-outline"></ion-icon>
+              </button>}
+              <Trash postId={postId} username={username} />
+            </BoxSettings>
+          </BoxHeader>
+          {isEdit ? (
+            <input
+              ref={inputRef}
+              itemRef={inputRef}
+              onKeyDown={key => handleKeyPress(key)}
+            >
+            </input>
+            //   <input onSubmit={sendEdition}
+            //   ref={inputRef}
+            //   onChange={handleInput}
+            //   value={newDescription}>
+            // </input>
+          )
+            : <PostDescription currentDescription={currentDescription} />
+          }
 
-          <img src={image} alt="img_link" />
-        </BoxInfo>
-      </Content>
-    </Container>
-    <Comments 
-      isCommentsOpened={isCommentsOpened}
-      commentsNow={commentsNow}
-      setCommentsNow={setCommentsNow}
-      postId={postId}
-    />
+          <BoxInfo href={url} target="_blank">
+            <Info>
+              <h1>{title}</h1>
+              <h2>{linkDescription}</h2>
+              <p>{url}</p>
+            </Info>
+
+            <img src={image} alt="img_link" />
+          </BoxInfo>
+        </Content>
+      </Container>
+      <Comments
+        isCommentsOpened={isCommentsOpened}
+        commentsNow={commentsNow}
+        setCommentsNow={setCommentsNow}
+        postId={postId}
+      />
     </>
   );
 }
@@ -157,10 +166,9 @@ const Container = styled.div`
   height: 270px;
   
 
-  border-radius: ${({radius})=>radius};
+  border-radius: ${({ radius }) => radius};
 
   padding: 15px 20px;
-  margin-top: 15px;
 
   color: #ffffff;
   font-family: Lato;
@@ -169,6 +177,32 @@ const Container = styled.div`
     border-radius: 0px;
   }
 `;
+
+const RepostedBy = styled.div`
+  display: flex;
+  gap: 8px;
+  height: 30px;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: 15px;
+  background-color: #1E1E1E;
+  border-radius: 16px 16px 0 0;
+  padding-left: 10px;
+
+  p {
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 11px;
+    line-height: 13px;
+    color: #FFFFFF;
+  }
+
+  ion-icon {
+    font-size: 22px;
+    color: #FFFFFF;
+  }
+`
 
 const Header = styled.div`
   display: flex;
