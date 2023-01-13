@@ -98,6 +98,7 @@ const Container = styled.div`
 
   @media (max-width: 608px) {
     border-radius: 0px;
+    gap: 0px;
 
     text-align: center;
 
