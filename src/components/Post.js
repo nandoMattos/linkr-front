@@ -41,6 +41,7 @@ export default function Post({ post, listFollowing }) {
   const [isCommentsOpened, setIsCommentsOpened] = useState(false)
   const [commentsNow, setCommentsNow] = useState(getComments());
   const [qntRepost, setQntRepost] = useState(countRepost);
+  console.log(qntRepost)
 
   const myName = JSON.parse(localStorage.getItem("username"));
 
