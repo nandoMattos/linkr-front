@@ -184,6 +184,7 @@ const Container = styled.div`
   border-radius: ${({ radius }) => radius};
 
   padding: 15px 20px;
+  margin-top: 18px;
 
   color: #ffffff;
   font-family: Lato;
