@@ -26,19 +26,21 @@ export default function Post({ post, listFollowing }) {
     repostedBy
   } = post
   
-  console.log(post);
-  let qntRepost;
+  //console.log(post);
+  let countRepost;
   if (!repostCount) {
-    qntRepost = 0;
+    countRepost = 0;
   } else {
-    qntRepost = repostCount;
+    countRepost = repostCount;
   }
+  //console.log(qntRepost)
 
   const inputRef = useRef();
   const [isEdit, setIsEdit] = useState(false);
   const [currentDescription, setCurrentDescription] = useState(description)
   const [isCommentsOpened, setIsCommentsOpened] = useState(false)
   const [commentsNow, setCommentsNow] = useState(getComments());
+  const [qntRepost, setQntRepost] = useState(countRepost);
 
   const myName = JSON.parse(localStorage.getItem("username"));
 

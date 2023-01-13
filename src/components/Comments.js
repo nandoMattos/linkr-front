@@ -12,7 +12,7 @@ export default function Comments({
   postBelongerId,
 }) {
   const [form, setForm] = useState({ comment: "" });
-  console.log(listFollowing)
+  console.log("listfollwing:", listFollowing)
 
   const profileImg = JSON.parse(localStorage.getItem("profileImg"));
   const username = JSON.parse(localStorage.getItem("username"));
@@ -45,9 +45,11 @@ export default function Comments({
   }
 
   function getFollowingLabel(userId) {
-    for (let u of listFollowing) {
-      if (u.id_user_followed === userId) {
-        return <Label>• following</Label>;
+    if (listFollowing) {
+      for (let u of listFollowing) {
+        if (u.id_user_followed === userId) {
+          return <Label>• following</Label>;
+        }
       }
     }
   }
@@ -104,22 +106,17 @@ const AllCommentsContainer = styled.div`
   height: fit-content;
   min-height: 100px;
   border-radius: 0 0 16px 16px;
-  padding-top: 5px;
+  padding-top: 15px;
   display: ${({ display }) => display};
   background-color: #1e1e1e;
-
-  @media (max-width:608px) {
-    border-radius: 0;
-  }
 `;
 
 const TextInfo = styled.h1`
   font-family: Oswald;
-  font-size: 22px;
+  font-size: 25px;
   font-weight: 700;
   text-align: center;
   color: #ffffff;
-  padding-top: 10px;
 `;
 
 const CommentContainer = styled.div`
@@ -134,10 +131,7 @@ const CommentContainer = styled.div`
   color: #acacac;
   font-family: Lato;
   border-bottom: 2px solid ${colors.MAIN_COLOR};
-
-  @media (max-width:608px) {
-    padding-left: 8px;
-  }
+  padding-bottom: 10px;
 `;
 
 const CommentDiv = styled.div`
@@ -172,6 +166,7 @@ const InsertCommentDiv = styled.div`
   padding: 0 10px;
   height: 80px;
   width: 100%;
+  padding-top: 10px;
 
   ion-icon {
     right: 100px;
@@ -198,9 +193,5 @@ const InputComment = styled.input`
 
   ::placeholder {
     font-style: italic;
-  }
-
-  @media (max-width:608px) {
-    width: 70%;
   }
 `;
