@@ -74,6 +74,7 @@ const HeaderContainer = styled.div`
     ion-icon {
       font-size: 35px;
       color: white;
+      margin-right: 8px;
     }
 
     img {

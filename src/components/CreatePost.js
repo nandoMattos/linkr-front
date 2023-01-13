@@ -83,7 +83,6 @@ const Container = styled.div`
   display: flex;
   align-items: flex-start;
   gap: 15px;
-  margin-bottom: 15px;
 
   background-color: #ffffff;
   height: 220px;
@@ -91,7 +90,7 @@ const Container = styled.div`
   border-radius: 16px;
 
   padding: 15px 20px;
-  margin-top: 20px;
+  margin: 20px 0px 10px 0px;
 
   color: #ffffff;
   font-family: Lato;

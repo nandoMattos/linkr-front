@@ -54,7 +54,7 @@ const GlobalStyle = createGlobalStyle`
 	  color: inherit;
 	  cursor: pointer;
   }
-  ion-icon {
+  ion-icon, button {
     cursor: pointer;
   }
   .scroll-loader {

@@ -224,7 +224,6 @@ const AuthContainer = styled.div`
       font-size: 27px;
       font-family: 'Oswald', sans-serif;
       color: white;
-      cursor: pointer;
       display: flex;
       justify-content: center;
       align-items: center;
