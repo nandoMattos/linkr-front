@@ -98,7 +98,6 @@ const Container = styled.div`
 
   @media (max-width: 608px) {
     border-radius: 0px;
-    gap: 0px;
 
     text-align: center;
 
@@ -167,6 +166,9 @@ const FormPost = styled.div`
         font-size: 15px;
         line-height: 18px;
         color: #949494;
+    }
+    @media (max-width: 620px){
+        width: 100%;
     }
 `
 const InputUrl = styled.div`

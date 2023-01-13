@@ -22,18 +22,23 @@ export default function Post({ post, listFollowing }) {
     title,
     image,
     linkDescription,
-    repost_count,
-    reposted_by
+    repostCount,
+    repostedBy
   } = post
   
   console.log(post);
+  let qntRepost;
+  if (!repostCount) {
+    qntRepost = 0;
+  } else {
+    qntRepost = repostCount;
+  }
 
   const inputRef = useRef();
   const [isEdit, setIsEdit] = useState(false);
   const [currentDescription, setCurrentDescription] = useState(description)
   const [isCommentsOpened, setIsCommentsOpened] = useState(false)
   const [commentsNow, setCommentsNow] = useState(getComments());
-  const repost = true
 
   const myName = JSON.parse(localStorage.getItem("username"));
 
@@ -84,13 +89,12 @@ export default function Post({ post, listFollowing }) {
 
   return (
     <BigContainer>
-      <RepostedBy>
-          {/* <ion-icon name="repeat-outline" />
-          <p>Re-posted by you</p> */}
-          <Repost postId={postId} ></Repost>
-      </RepostedBy>
-      <Container radius={repost && !isCommentsOpened ? "0px 0px 16px 16px" : !repost && 
-      isCommentsOpened ? "16px 16px 0 0" : repost && isCommentsOpened ? "0px" :"16px"}>
+      {repostedBy && <RepostedByDiv>
+        <ion-icon name="repeat-outline" />
+        <p>Re-posted by {repostedBy[0].username}</p>
+      </RepostedByDiv>}
+      <Container radius={repostedBy && !isCommentsOpened ? "0px 0px 16px 16px" : !repostedBy &&
+        isCommentsOpened ? "16px 16px 0 0" : repostedBy && isCommentsOpened ? "0px" : "16px"}>
 
         <Header>
           <img src={profilepicture} alt="user_img"></img>
@@ -105,7 +109,7 @@ export default function Post({ post, listFollowing }) {
           />
           <p>{commentsNow.length} comments</p>
 
-          <Repost postId={postId}></Repost>
+          <Repost postId={postId} qntRepost={qntRepost}></Repost>
         </Header>
 
         <Content>
@@ -159,6 +163,10 @@ export default function Post({ post, listFollowing }) {
 
 const BigContainer = styled.div`
   margin-bottom: 15px;
+  
+  @media (max-width: 620px) {
+    width: 100%;
+  }
 `
 
 const Container = styled.div`
@@ -182,7 +190,7 @@ const Container = styled.div`
   }
 `;
 
-const RepostedBy = styled.div`
+const RepostedByDiv = styled.div`
   display: flex;
   gap: 8px;
   height: 30px;

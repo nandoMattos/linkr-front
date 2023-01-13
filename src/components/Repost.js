@@ -6,7 +6,7 @@ import { repostPost } from "../services/posts";
 
 Modal.setAppElement("#root");
 
-export function Repost( { postId }) {
+export function Repost( { postId, qntRepost }) {
 
     const customStyles = {
         content: {
@@ -42,13 +42,13 @@ export function Repost( { postId }) {
         console.log(postId)
         const response = await repostPost(postId);
         if (!response?.status) alert("Não foi possivel compartilhar o post")
-        console.log(response.status);
+        closeModal();
     }
 
     return (
         <>
             <ion-icon name="repeat-outline" onClick={openModal}  />
-            <p>re-post</p>
+            <p>{qntRepost} re-post</p>
             <Modal
                 isOpen={modalIsOpen}
                 onRequestClose={closeModal}
