@@ -42,7 +42,7 @@ export function Repost( { postId }) {
         console.log(postId)
         const response = await repostPost(postId);
         if (!response?.status) alert("Não foi possivel compartilhar o post")
-        console.log(response.status);
+        closeModal();
     }
 
     return (
