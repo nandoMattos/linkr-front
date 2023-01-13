@@ -96,9 +96,9 @@ const Container = styled.div`
   color: #ffffff;
   font-family: Lato;
 
-  @media (max-width: 425px) {
+  @media (max-width: 620px) {
     border-radius: 0px;
-
+    width: 100%;
     text-align: center;
   }
 `;
@@ -153,6 +153,9 @@ const FormPost = styled.div`
         font-size: 15px;
         line-height: 18px;
         color: #949494;
+    }
+    @media (max-width: 620px){
+        width: 100%;
     }
 `
 const InputUrl = styled.div`
