@@ -33,7 +33,7 @@ export default function Scroll({ listPosts, setListPosts, children }) {
   async function handleLoadMore() {
     
     try {
-      if (Date.now() - timeStamp < 1000 || Date.now() - timeStamp < 1000) return;
+      if (Date.now() - timeStamp < 1000 || Date.now() - timeStamp < 100) return;
 
       setTimeStamp(Date.now());
 

@@ -185,7 +185,7 @@ const Container = styled.div`
   color: #ffffff;
   font-family: Lato;
 
-  @media (max-width: 425px) {
+  @media (max-width: 608px) {
     border-radius: 0px;
   }
 `;
@@ -214,12 +214,16 @@ const RepostedByDiv = styled.div`
     font-size: 22px;
     color: #FFFFFF;
   }
+
+  @media (max-width: 608px) {
+    border-radius: 0px;
+  }
 `
 
 const Header = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
   gap: 5px;
   height: 100%;
@@ -231,7 +235,9 @@ const Header = styled.div`
     height: 40px;
     border-radius: 50%;
 
-    margin-bottom: 10px;
+    margin-bottom: 15px;
+
+    object-fit: cover;
   }
 
   ion-icon {
@@ -240,6 +246,8 @@ const Header = styled.div`
 
   p {
     font-size: 10px;
+    margin-bottom: 15px;
+    text-align: center;
   }
 `;
 
@@ -276,7 +284,8 @@ const BoxSettings = styled.div`
 
 
 const BoxInfo = styled.a`
-  height: 100%;
+  width: 100%;
+  height: 75%;
   border: 1px solid #4d4d4d;
   border-radius: 12px;
 
@@ -285,10 +294,19 @@ const BoxInfo = styled.a`
   img {
     width: 200px;
     border-radius: 0px 12px 12px 0px;
+    object-fit: cover;
   }
 
-  @media (max-width: 425px) {
+  @media (max-width: 608px) {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
     max-height: 185px;
+
+    img {
+      width: 152px;
+      height: 100%;
+    }
   }
 `;
 
@@ -298,16 +316,16 @@ const Info = styled.div`
   justify-content: space-around;
 
   height: 100%;
-  width: 65%;
 
   padding: 20px 15px;
 
   font-size: 11px;
 
   overflow-wrap: anywhere;
+  overflow: hidden;
 
   h1 {
-    font-size: 16px;
+    font-size: 14px;
     color: #cecece;
   }
 
@@ -319,10 +337,17 @@ const Info = styled.div`
     color: #cecece;
   }
 
-  @media (max-width: 425px) {
+  @media (max-width: 608px) {
     h1 {
-      font-size: 10px;
+      font-size: 14px;
     }
-    
+
+    h2 {
+      display: none;
+    }
+
+    h1, h2, p {
+      width: 100%;
+    }
   }
 `;

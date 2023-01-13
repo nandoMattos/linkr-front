@@ -68,8 +68,13 @@ const Container = styled.div`
 const Content = styled.div`
   display: flex;
   margin: auto;
+  width: 65%;
 
   gap: 20px;
+
+  @media (max-width:1060px) {
+    width: 100%;
+  }
 `;
 
 const Timeline = styled.div`
@@ -81,6 +86,9 @@ const Timeline = styled.div`
 
   width: 600px;
 
+  @media (max-width: 705px) {
+    margin-top: 100px;
+  }
 `;
 
 const Title = styled.div`
@@ -96,9 +104,10 @@ const Title = styled.div`
 
     margin-bottom: 10px;
 
-    @media (max-width: 425px) {
+    @media (max-width: 705px) {
       margin-left: 20px;
       margin-top: 20px;
+      font-size: 35px;
     }
   }
 
@@ -109,9 +118,14 @@ const Button = styled.button`
     font-weight: 700;
     height: 30px;
     width: 100px;
+    margin-top: 15px;
     border-radius: 5px;
     border: none;
     cursor: pointer;
+
+    @media (max-width: 705px) {
+      margin-right: 20px;
+    }
 
     &.follow {
       background-color: #1877F2;
