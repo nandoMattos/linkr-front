@@ -22,11 +22,17 @@ export default function Post({ post }) {
     title,
     image,
     linkDescription,
-    repost_count,
+    repostCount,
     repostedBy
   } = post
 
   console.log(post);
+  let qntRepost;
+  if (!repostCount) {
+    qntRepost = 0;
+  } else {
+    qntRepost = repostCount;
+  }
 
   const inputRef = useRef();
   const [isEdit, setIsEdit] = useState(false);
@@ -104,7 +110,7 @@ export default function Post({ post }) {
           />
           <p>{commentsNow.length} comments</p>
 
-          <Repost postId={postId}></Repost>
+          <Repost postId={postId} qntRepost={qntRepost}></Repost>
         </Header>
 
         <Content>

@@ -6,7 +6,7 @@ import { repostPost } from "../services/posts";
 
 Modal.setAppElement("#root");
 
-export function Repost( { postId }) {
+export function Repost( { postId, qntRepost }) {
 
     const customStyles = {
         content: {
@@ -48,7 +48,7 @@ export function Repost( { postId }) {
     return (
         <>
             <ion-icon name="repeat-outline" onClick={openModal}  />
-            <p>re-post</p>
+            <p>{qntRepost} re-post</p>
             <Modal
                 isOpen={modalIsOpen}
                 onRequestClose={closeModal}
