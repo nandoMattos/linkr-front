@@ -26,19 +26,21 @@ export default function Post({ post, listFollowing }) {
     repostedBy
   } = post
   
-  console.log(post);
-  let qntRepost;
+  //console.log(post);
+  let countRepost;
   if (!repostCount) {
-    qntRepost = 0;
+    countRepost = 0;
   } else {
-    qntRepost = repostCount;
+    countRepost = repostCount;
   }
+  
 
   const inputRef = useRef();
   const [isEdit, setIsEdit] = useState(false);
   const [currentDescription, setCurrentDescription] = useState(description)
   const [isCommentsOpened, setIsCommentsOpened] = useState(false)
   const [commentsNow, setCommentsNow] = useState(getComments());
+  const [qntRepost, setQntRepost] = useState(countRepost);
 
   const myName = JSON.parse(localStorage.getItem("username"));
 
@@ -73,15 +75,16 @@ export default function Post({ post, listFollowing }) {
       inputRef.current.disabled = true
 
       editPost(postId, body).then((result) => {
-        if ((result?.status || result?.response?.status) !== 200) {
-          alert(result.response.data.message)
+        
+        if (result?.status !== 201) {
+          //alert(result.response.data.message)
+          alert("Erro ao editar o post")
+          inputRef.current.disabled = false
           return
         }
 
-        toggleEdit()
-
       }).finally(() => {
-        inputRef.current.disabled = false
+        toggleEdit();
       })
 
     }
