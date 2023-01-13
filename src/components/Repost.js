@@ -76,6 +76,13 @@ const Text = styled.div`
         text-align: center;
         color: #FFFFFF;
     }
+
+    @media (max-width: 608px) {
+        width: 50%;
+        p {
+            font-size: 25px;
+        }
+    }
 `
 
 const ButtonsSession = styled.div`
@@ -93,5 +100,14 @@ const ButtonsSession = styled.div`
         font-weight: 700;
         font-size: 18px;
         line-height: 22px;
+    }
+
+    @media (max-width: 608px) {
+        width: 50%;
+
+        button {
+            width: 120px;
+            font-size: 15px;
+        }
     }
 `

@@ -96,10 +96,15 @@ const Container = styled.div`
   color: #ffffff;
   font-family: Lato;
 
-  @media (max-width: 425px) {
+  @media (max-width: 608px) {
     border-radius: 0px;
+    gap: 0px;
 
     text-align: center;
+
+    img {
+        display: none;
+    }
   }
 `;
 
@@ -116,6 +121,8 @@ const Photo = styled.div`
     border-radius: 50%;
 
     margin-bottom: 10px;
+
+    object-fit: cover;
   }
 `
 
@@ -124,6 +131,7 @@ const Content = styled.div`
   flex-direction: column;
   gap: 10px;
   height: 100%;
+  width: 100%;
 
   p {
     color: #707070;
@@ -134,10 +142,16 @@ const Content = styled.div`
     font-size: 20px;
     line-height: 24px;
   }
+
+  @media (max-width: 608px) {
+    p {
+        font-size: 17px;
+    }
+  }
 `;
 
 const FormPost = styled.div`
-    width: 480px;
+    width: 100%;
     display: flex;
     flex-direction: column;
     input {
