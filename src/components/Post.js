@@ -33,7 +33,7 @@ export default function Post({ post, listFollowing }) {
   } else {
     countRepost = repostCount;
   }
-  //console.log(qntRepost)
+  
 
   const inputRef = useRef();
   const [isEdit, setIsEdit] = useState(false);
@@ -75,15 +75,16 @@ export default function Post({ post, listFollowing }) {
       inputRef.current.disabled = true
 
       editPost(postId, body).then((result) => {
-        if ((result?.status || result?.response?.status) !== 200) {
-          alert(result.response.data.message)
+        
+        if (result?.status !== 201) {
+          //alert(result.response.data.message)
+          alert("Erro ao editar o post")
+          inputRef.current.disabled = false
           return
         }
 
-        toggleEdit()
-
       }).finally(() => {
-        inputRef.current.disabled = false
+        toggleEdit();
       })
 
     }

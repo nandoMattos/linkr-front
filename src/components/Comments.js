@@ -12,7 +12,7 @@ export default function Comments({
   postBelongerId,
 }) {
   const [form, setForm] = useState({ comment: "" });
-  console.log("listfollwing:", listFollowing)
+  
 
   const profileImg = JSON.parse(localStorage.getItem("profileImg"));
   const username = JSON.parse(localStorage.getItem("username"));
