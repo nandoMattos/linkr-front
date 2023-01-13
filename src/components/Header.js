@@ -8,11 +8,10 @@ import { findUsersByName } from "../services/user";
 import UserSearch from "./UserSearch";
 import UserContext from "../context/UserContext";
 import { useOutsideClick } from "../hooks/useClickOutside";
+import SearchBar from "./SearchBar";
 
 export default function Header() {
   const { showLogout, setShowLogout } = useContext(UserContext);
-  const [activeInput, setActiveInput] = useState(false);
-  const [listUser, setListUser] = useState([]);
 
   const profileImg = JSON.parse(localStorage.getItem("profileImg"));
 
@@ -24,25 +23,7 @@ export default function Header() {
     navigate("/");
   }
 
-  function setActive() {
-    setActiveInput(!activeInput);
-  }
 
-  async function handleInput(e) {
-    const name = e.target.value;
-    try {
-      const res = await findUsersByName(name);
-      setListUser(res.data);
-    } catch (err) {
-      console.log(err);
-    }
-  }
-
-  function onClickOutsideTheContainer () {
-    setActiveInput(false);
-  }
-
-  const containerRef = useOutsideClick(onClickOutsideTheContainer);
 
   return (
     <>
@@ -51,28 +32,7 @@ export default function Header() {
           <h1>linkr</h1>
         </Link>
 
-        <div ref={containerRef}>
-          <SearchBar onFocus={() => setActive()} >
-            <DebounceInput
-              type="text"
-              placeholder="Search for people"
-              minLength={3}
-              debounceTimeout={300}
-              onChange={e => handleInput(e)}
-            />
-            <ion-icon name="search-outline"></ion-icon>
-          </SearchBar>
-
-          { activeInput && listUser.length > 0 &&
-            (
-              <Dropdown>
-                {listUser.map((u, idx) => <UserSearch key={idx} user={u} />)}
-              </Dropdown>
-            )
-          }
-
-        </div>
-
+        <SearchBar />
         <div className="right" onClick={() => setShowLogout(!showLogout)}>
           {showLogout ?
             (<ion-icon name="chevron-up-outline"></ion-icon>) :
@@ -153,54 +113,3 @@ const LogoutContainer = styled.div`
   position: fixed;
 `;
 
-const SearchBar = styled.div`
-  display: flex;
-  align-items: center;
-  position: relative;
-
-  background-color: #ffffff;
-  height: 45px;
-  width: 450px;
-
-  border-radius: 8px;
-  padding-left: 15px;
-
-
-  input {
-    font-family: Lato;
-    font-size: 19px;
-    width: 90%;
-    border: none;
-
-    outline: none;
-
-    &::placeholder {
-      color: #C6C6C6;
-    }
-  }
-
-  ion-icon {
-    font-size: 22px;
-    color: #C6C6C6;
-  }
-
-  @media (max-width: 705px) {
-    display: none;
-  }
-`;
-
-const Dropdown = styled.div`
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-
-    position: absolute;
-    z-index: -1;
-    transform: translateY(-5px);
-    
-    padding: 20px;
-
-    width: 450px;
-    background-color: #E7E7E7;
-    border-radius: 0px 0px 8px 8px;
-`;

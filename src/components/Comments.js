@@ -8,6 +8,8 @@ export default function Comments({
   commentsNow,
   setCommentsNow,
   postId,
+  listFollowing,
+  postBelongerId,
 }) {
   const [form, setForm] = useState({ comment: "" });
 
@@ -27,18 +29,31 @@ export default function Comments({
       return;
     }
 
-    insertComment(postId, form)
+    insertComment(postId, form);
     setCommentsNow([
       ...commentsNow,
       { ...form, profile_picture: profileImg, username },
     ]);
     form.comment = "";
-
   }
 
   function handleKeyPress(e) {
     if (e.code === "Enter") {
       sendMessage();
+    }
+  }
+
+  function getFollowingLabel(userId) {
+    for (let u of listFollowing) {
+      if (u.id_user_followed === userId) {
+        return <Label>• following</Label>;
+      }
+    }
+  }
+
+  function getAuthorLabel(userId) {
+    if (userId === postBelongerId) {
+      return <Label>• post's author</Label>;
     }
   }
 
@@ -51,7 +66,11 @@ export default function Comments({
           <CommentContainer>
             <UserImage src={c.profile_picture} />
             <CommentDiv>
-              <Username>{c.username}</Username>
+              <Username>
+                {c.username}
+                {getAuthorLabel(c.userId)}
+                {getFollowingLabel(c.userId)}
+              </Username>
               <Comment>{c.comment}</Comment>
             </CommentDiv>
           </CommentContainer>
@@ -119,9 +138,18 @@ const CommentDiv = styled.div`
 `;
 
 const Username = styled.p`
+  display: flex;
+  align-items: center;
   padding: 10px 0 5px 0;
   font-weight: bold;
   color: white;
+`;
+
+const Label = styled.span`
+  font-size: 13px;
+  font-weight: normal;
+  color: #565656;
+  margin-left: 10px;
 `;
 
 const Comment = styled.p`

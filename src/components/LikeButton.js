@@ -2,6 +2,7 @@ import styled from "styled-components";
 import {Tooltip} from "react-tooltip"
 import { deleteLike, insertLike } from "../services/posts";
 import { useState } from "react";
+import { colors } from "../assets/constants";
 
 export default function LikeButton({likedByPost, postId}) {
   const [likedBy, setLikedBy] = useState(likedByPost);  
@@ -58,7 +59,7 @@ export default function LikeButton({likedByPost, postId}) {
 
   return (
     <>
-      <HeartColor id={`likedBy-${postId}`} color={userLiked ? "red" : "none"}>
+      <HeartColor id={`likedBy-${postId}`} color={userLiked ? colors.LIKED_COLOR : "none"}>
         <ion-icon
         onClick={()=> userLiked ? deslikePost(postId) : likePost(postId) } 
         name={userLiked ? "heart" : "heart-outline"}/>
