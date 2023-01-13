@@ -1,13 +1,8 @@
-import { useState } from "react";
-import { DebounceInput } from "react-debounce-input";
 import { Link, useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import styled from "styled-components";
 import { colors } from "../assets/constants";
-import { findUsersByName } from "../services/user";
-import UserSearch from "./UserSearch";
 import UserContext from "../context/UserContext";
-import { useOutsideClick } from "../hooks/useClickOutside";
 import SearchBar from "./SearchBar";
 
 export default function Header() {
@@ -71,7 +66,7 @@ const HeaderContainer = styled.div`
   }
 
   .right {
-    width: 100px;
+    width: 115px;
     display: flex;
     justify-content: space-between;
     align-items: center;

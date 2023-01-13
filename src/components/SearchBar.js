@@ -31,6 +31,7 @@ export default function SearchBar({mobile}) {
 
 
   return (
+    <Centralize>
     <div ref={containerRef}>
     <Bar onFocus={() => setActive()} mobile={mobile} >
       <DebounceInput
@@ -52,10 +53,16 @@ export default function SearchBar({mobile}) {
     }
 
   </div>
-
+  </Centralize>
   );
 }
 
+
+const Centralize = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+`
 
 const Bar = styled.div`
   display: flex;
@@ -90,14 +97,16 @@ const Bar = styled.div`
 
   @media (max-width: 705px) {
     display: ${props => props.mobile ? "flex" : "none"};
-    margin-left: 20px;
+    width: 550px;
   }
 
   @media (min-width: 705px) {
     display: ${props => props.mobile ? "none" : "flex"};
   }
 
-
+  @media (max-width: 608px) {
+    width: 340px;
+  }
 `;
 
 const Dropdown = styled.div`
@@ -106,7 +115,7 @@ const Dropdown = styled.div`
     gap: 15px;
 
     position: absolute;
-    z-index: 999;
+    z-index: 995;
     transform: translateY(-5px);
     
     padding: 20px;
@@ -114,10 +123,13 @@ const Dropdown = styled.div`
     width: 450px;
     background-color: #E7E7E7;
     border-radius: 0px 0px 8px 8px;
+    box-shadow: 0px 4px 4px 0px #00000040;
 
     @media (max-width: 705px) {
-        margin-left: 20px;
+      width: 550px;
     }
 
-    
+    @media (max-width: 608px) {
+      width: 340px;
+    }
 `;

@@ -45,14 +45,13 @@ export default function TrendingBar({loading}) {
 const Container = styled.aside`
   display: ${({display})=>display};
   flex-direction: column;
-  height: 400px;
-  width: 40vh;
+  height: 420px;
+  width: 300px;
   position: sticky;
-  right: 15vh;
-  top: 75px;
+  top: 200px;
   margin-top: 200px;
-  background-color: ${colors.SECONDARY_COLOR};
   border-radius: 16px;
+  background-color: ${colors.SECONDARY_COLOR};
 
   @media (max-width: 1160px) {
     display: none;
